@@ -30,7 +30,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: SonarCloud Scan
-      uses: sonarsource/sonarcloud-github-action@master
+      run: ./mvnw -B verify sonar:sonar -Dsonar.projectKey=miguelbada_desarrollo_app_criptop2p -Dsonar.organization=miguelbada -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
