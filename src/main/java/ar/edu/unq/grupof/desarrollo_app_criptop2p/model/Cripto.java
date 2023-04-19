@@ -1,12 +1,17 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+
 import java.time.LocalDateTime;
 
-public class CriptoActive {
+@Builder
+@AllArgsConstructor
+public class Cripto {
     private String symbol;
     private LocalDateTime dateTime;
 
-    public CriptoActive() {
+    public Cripto() {
         this.dateTime = LocalDateTime.now();
     }
 
