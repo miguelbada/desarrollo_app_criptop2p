@@ -5,6 +5,7 @@ public class UserModelDTO {
     private String lastName;
 
     public UserModelDTO() {
+        //Use for Hibernate
     }
 
     public String getName() {

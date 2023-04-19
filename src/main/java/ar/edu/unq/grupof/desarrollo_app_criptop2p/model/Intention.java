@@ -12,11 +12,11 @@ public class Intention {
     private Double criptoQuantity;
     private Double criptoQuote;
     private Double argentineCurrency;
-    private User user;
+    private UserModel user;
     private OperationType type;
     private StateProcess stateProcess;
 
-    private User userTransaction;
+    private UserModel userTransaction;
 
     public Intention() {
         this.stateProcess = StateProcess.ACTIVE;
@@ -54,11 +54,11 @@ public class Intention {
         this.argentineCurrency = argentineCurrency;
     }
 
-    public User getUser() {
+    public UserModel getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserModel user) {
         this.user = user;
     }
 
@@ -78,11 +78,11 @@ public class Intention {
         this.stateProcess = stateProcess;
     }
 
-    public User getUserTransaction() {
+    public UserModel getUserTransaction() {
         return userTransaction;
     }
 
-    public void setUserTransaction(User userTransaction) {
+    public void setUserTransaction(UserModel userTransaction) {
         this.userTransaction = userTransaction;
     }
 

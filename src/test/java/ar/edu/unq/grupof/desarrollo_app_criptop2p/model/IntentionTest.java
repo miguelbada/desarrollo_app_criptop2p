@@ -3,24 +3,24 @@ package ar.edu.unq.grupof.desarrollo_app_criptop2p.model;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class IntentionTest {
+class IntentionTest {
 
     @Test
     void aUserExpressesHisIntentionToBuy() {
-        User user = User.builder().name("Miguel").lastName("Bada").build();
+        UserModel user = UserModel.builder().name("Miguel").lastName("Bada").build();
         Intention intentionBuy = Intention
                 .builder()
                 .user(user)
                 .type(OperationType.PURCHASE)
                 .build();
 
-        assertEquals(intentionBuy.getUser().fullName(), "Miguel Bada");
-        assertEquals(intentionBuy.getType(), OperationType.PURCHASE);
+        assertEquals("Miguel Bada", intentionBuy.getUser().fullName());
+        assertEquals(OperationType.PURCHASE, intentionBuy.getType());
     }
 
     @Test
     void aUserTriesToSelfPurchase() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)
@@ -30,12 +30,12 @@ public class IntentionTest {
 
         miguel.processIntentionTo(intentionPurchase);
 
-        assertEquals(intentionPurchase.getStateProcess(), StateProcess.ACTIVE);
+        assertEquals(StateProcess.ACTIVE, intentionPurchase.getStateProcess());
     }
 
     @Test
     void aUserTriesToSelfSale() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").build();
         Intention intentionSale = Intention
                 .builder()
                 .user(miguel)
@@ -45,13 +45,13 @@ public class IntentionTest {
 
         miguel.processIntentionTo(intentionSale);
 
-        assertEquals(intentionSale.getStateProcess(), StateProcess.ACTIVE);
+        assertEquals(StateProcess.ACTIVE, intentionSale.getStateProcess());
     }
 
     @Test
     void aUserTriesToProcessIntentionToPurchase() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").build();
-        User juan = User.builder().name("Juan").lastName("Gomez").build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)
@@ -61,13 +61,13 @@ public class IntentionTest {
 
         juan.processIntentionTo(intentionPurchase);
 
-        assertEquals(intentionPurchase.getStateProcess(), StateProcess.IN_PROCESS);
+        assertEquals(StateProcess.IN_PROCESS, intentionPurchase.getStateProcess());
     }
 
     @Test
     void aUserTriesToProcessIntentionToSale() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").build();
-        User juan = User.builder().name("Juan").lastName("Gomez").build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").build();
         Intention intentionSale = Intention
                 .builder()
                 .user(miguel)
@@ -77,13 +77,13 @@ public class IntentionTest {
 
         juan.processIntentionTo(intentionSale);
 
-        assertEquals(intentionSale.getStateProcess(), StateProcess.IN_PROCESS);
+        assertEquals(StateProcess.IN_PROCESS, intentionSale.getStateProcess());
     }
 
     @Test
     void aUserTriesToProcessIntentionSaleToMakeATransfer() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").build();
-        User juan = User.builder().name("Juan").lastName("Gomez").build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").build();
         Intention intentionSale = Intention
                 .builder()
                 .user(miguel)
@@ -99,8 +99,8 @@ public class IntentionTest {
 
     @Test
     void otherUserTriesToProcessIntentionSaleToMakeATransfer() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").build();
-        User juan = User.builder().name("Juan").lastName("Gomez").build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").build();
         Intention intentionSale = Intention
                 .builder()
                 .user(miguel)
@@ -116,8 +116,8 @@ public class IntentionTest {
 
     @Test
     void aUserTriesToProcessIntentionPurchaseToMakeATransfer() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").build();
-        User juan = User.builder().name("Juan").lastName("Gomez").build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").build();
         Intention intentionSale = Intention
                 .builder()
                 .user(miguel)
@@ -133,8 +133,8 @@ public class IntentionTest {
 
     @Test
     void otherUserTriesToProcessIntentionPurchaseToMakeATransfer() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").build();
-        User juan = User.builder().name("Juan").lastName("Gomez").build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").build();
         Intention intentionSale = Intention
                 .builder()
                 .user(miguel)
@@ -150,8 +150,8 @@ public class IntentionTest {
 
     @Test
     void aUserTriesToProcessIntentionPurchaseToConfirmReception() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)
@@ -168,8 +168,8 @@ public class IntentionTest {
 
     @Test
     void aOtherUserTriesToProcessIntentionPurchaseToConfirmReception() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").build();
-        User juan = User.builder().name("Juan").lastName("Gomez").build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)
@@ -186,8 +186,8 @@ public class IntentionTest {
 
     @Test
     void aUserTriesToProcessIntentionSaleToConfirmReception() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
         Intention intentionSale = Intention
                 .builder()
                 .user(miguel)
@@ -204,8 +204,8 @@ public class IntentionTest {
 
     @Test
     void otherUserTriesToProcessIntentionSaleToConfirmReception() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").build();
-        User juan = User.builder().name("Juan").lastName("Gomez").build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").build();
         Intention intentionSale = Intention
                 .builder()
                 .user(miguel)
@@ -222,9 +222,9 @@ public class IntentionTest {
 
     @Test
     void aOtherUserTriesToProcessIntentionToMakeATransfer() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").build();
-        User juan = User.builder().name("Juan").lastName("Gomez").build();
-        User martin = User.builder().name("Martin").lastName("Lacosta").build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").build();
+        UserModel martin = UserModel.builder().name("Martin").lastName("Lacosta").build();
         Intention intentionSale = Intention
                 .builder()
                 .user(miguel)
@@ -235,13 +235,13 @@ public class IntentionTest {
         juan.processIntentionTo(intentionSale);
         martin.makeTransfer(intentionSale);
 
-        assertEquals(intentionSale.getStateProcess(), StateProcess.IN_PROCESS);
+        assertEquals(StateProcess.IN_PROCESS, intentionSale.getStateProcess());
     }
 
     //-----------------cancel-------------------
     @Test
     void aUserTriesToCancelIntentionSale() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").build();
         Intention intentionSale = Intention
                 .builder()
                 .user(miguel)
@@ -251,12 +251,12 @@ public class IntentionTest {
 
         miguel.cancelIntention(intentionSale);
 
-        assertEquals(intentionSale.getStateProcess(), StateProcess.CANCEL);
+        assertEquals(StateProcess.CANCEL, intentionSale.getStateProcess());
     }
 
     @Test
     void aUserTriesToCancelIntentionPurchase() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)
@@ -266,13 +266,13 @@ public class IntentionTest {
 
         miguel.cancelIntention(intentionPurchase);
 
-        assertEquals(intentionPurchase.getStateProcess(), StateProcess.CANCEL);
+        assertEquals(StateProcess.CANCEL, intentionPurchase.getStateProcess());
     }
 
     @Test
     void otherUserTriesToCancelIntentionSaleOfOtherUser() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").build();
-        User juan = User.builder().name("Juan").lastName("Gomez").build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").build();
         Intention intentionSale = Intention
                 .builder()
                 .user(miguel)
@@ -282,13 +282,13 @@ public class IntentionTest {
 
         juan.cancelIntention(intentionSale);
 
-        assertEquals(intentionSale.getStateProcess(), StateProcess.ACTIVE);
+        assertEquals(StateProcess.ACTIVE, intentionSale.getStateProcess());
     }
 
     @Test
     void otherUserTriesToCancelIntentionPurchaseOfOtherUser() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").build();
-        User juan = User.builder().name("Juan").lastName("Gomez").build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)
@@ -298,13 +298,13 @@ public class IntentionTest {
 
         juan.cancelIntention(intentionPurchase);
 
-        assertEquals(intentionPurchase.getStateProcess(), StateProcess.ACTIVE);
+        assertEquals(StateProcess.ACTIVE, intentionPurchase.getStateProcess());
     }
 
     @Test
     void aUserTriesToCancelIntentionSaleProcess() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Intention intentionSale = Intention
                 .builder()
                 .user(miguel)
@@ -322,8 +322,8 @@ public class IntentionTest {
 
     @Test
     void otherUserTriesToCancelIntentionSaleProcess() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Intention intentionSale = Intention
                 .builder()
                 .user(miguel)
@@ -341,8 +341,8 @@ public class IntentionTest {
 
     @Test
     void aUserTriesToCancelIntentionPurchaseProcess() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)
@@ -360,8 +360,8 @@ public class IntentionTest {
 
     @Test
     void otherUserTriesToCancelIntentionPurchaseProcess() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)

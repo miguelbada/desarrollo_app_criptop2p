@@ -3,13 +3,13 @@ package ar.edu.unq.grupof.desarrollo_app_criptop2p.model;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class UserTest {
+class UserTest {
 
     //----------- addDoneOperations ----------------
     @Test
     void aUserCancelsThePurchaseIntentionInProcessAndNoAddDoneOperations() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)
@@ -26,8 +26,8 @@ public class UserTest {
 
     @Test
     void otherUserCancelsThePurchaseIntentionInProcessAndNoAddDoneOperations() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)
@@ -44,8 +44,8 @@ public class UserTest {
 
     @Test
     void aUserCancelsTheSaleIntentionInProcessAndNoAddDoneOperations() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)
@@ -62,8 +62,8 @@ public class UserTest {
 
     @Test
     void otherUserCancelsOtherSaleIntentionInProcessAndNoAddDoneOperations() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)
@@ -79,8 +79,8 @@ public class UserTest {
 
     @Test
     void aUserCancelsTheSaleIntentionMakeTransferAndNoAddDoneOperations() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
         Intention intentionSale = Intention
                 .builder()
                 .user(miguel)
@@ -97,8 +97,8 @@ public class UserTest {
 
     @Test
     void otherUserCancelsTheSaleIntentionMakeTransferAndNoAddDoneOperations() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
         Intention intentionSale = Intention
                 .builder()
                 .user(miguel)
@@ -115,8 +115,8 @@ public class UserTest {
 
     @Test
     void aUserCancelsThePurchaseIntentionMakeTransferAndNoAddDoneOperations() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)
@@ -133,8 +133,8 @@ public class UserTest {
 
     @Test
     void otherUserCancelsThePurchaseIntentionMakeTransferAndNoAddDoneOperations() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)
@@ -151,8 +151,8 @@ public class UserTest {
 
     @Test
     void aUserAcceptThePurchaseIntentionMakeTransferAndAddDoneOperations() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)
@@ -170,8 +170,8 @@ public class UserTest {
 
     @Test
     void aUserAcceptTheSaleIntentionMakeTransferAndAddDoneOperations() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
         Intention intentionSale = Intention
                 .builder()
                 .user(miguel)
@@ -191,8 +191,8 @@ public class UserTest {
 
     @Test
     void aUserCancelsThePurchaseIntentionActiveAndNoAddReputation() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)
@@ -208,8 +208,8 @@ public class UserTest {
 
     @Test
     void otherUserCancelsThePurchaseIntentionActiveAndNoAddReputation() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)
@@ -225,8 +225,8 @@ public class UserTest {
 
     @Test
     void aUserCancelsTheSaleIntentionActiveAndNoAddReputation() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Intention intentionSale = Intention
                 .builder()
                 .user(miguel)
@@ -242,8 +242,8 @@ public class UserTest {
 
     @Test
     void otherUserCancelsTheSaleIntentionActiveAndNoAddReputation() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Intention intentionSale = Intention
                 .builder()
                 .user(miguel)
@@ -259,8 +259,8 @@ public class UserTest {
 // stateProcess In_Process
     @Test
     void aUserCancelsThePurchaseIntentionInProgressAndDiscountReputation() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)
@@ -277,8 +277,8 @@ public class UserTest {
 
     @Test
     void otherUserCancelsThePurchaseIntentionInProgressAndDiscountReputation() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)
@@ -295,8 +295,8 @@ public class UserTest {
 
     @Test
     void aUserCancelsTheSaleIntentionInProgressAndDiscountReputation() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Intention intentionSale = Intention
                 .builder()
                 .user(miguel)
@@ -313,8 +313,8 @@ public class UserTest {
 
     @Test
     void otherUserCancelsTheSaleIntentionInProgressAndDiscountReputation() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Intention intentionSale = Intention
                 .builder()
                 .user(miguel)
@@ -331,8 +331,8 @@ public class UserTest {
 
     @Test
     void aUserCancelsThePurchaseIntentionMakeTransactionAndDiscountReputation() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)
@@ -350,8 +350,8 @@ public class UserTest {
 
     @Test
     void otherUserCancelsThePurchaseIntentionMakeTransactionAndDiscountReputation() {
-        User miguel = User.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
-        User juan = User.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Intention intentionPurchase = Intention
                 .builder()
                 .user(miguel)

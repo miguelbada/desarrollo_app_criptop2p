@@ -1,6 +1,6 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.rest_webservice;
 
-import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.User;
+import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.UserModel;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.service.UserModelService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +17,12 @@ public class UserModelController {
     private UserModelService service;
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getAllUserModel() {
+    public ResponseEntity<List<UserModel>> getAllUserModel() {
         return ResponseEntity.ok().body(service.findAllUser());
     }
 
     @PostMapping("/SignUp")
-    public ResponseEntity<User> userSignUp(@Valid @RequestBody User userModel) {
+    public ResponseEntity<UserModel> userSignUp(@Valid @RequestBody UserModel userModel) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.saveUserModel(userModel));
     }
 }

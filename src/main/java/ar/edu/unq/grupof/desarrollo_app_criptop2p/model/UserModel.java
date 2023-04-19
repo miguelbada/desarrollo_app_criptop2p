@@ -2,6 +2,8 @@ package ar.edu.unq.grupof.desarrollo_app_criptop2p.model;
 
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,21 +13,23 @@ import java.util.Objects;
 @Builder
 @AllArgsConstructor // para generar un constructor con todos los parametros
 @Entity
-public class User {
+public class UserModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
     private String name;
     private String lastName;
     private String email;
     private String address;
     private String password;
     private String cvuMercadoPago;
-    @Id
     private String cryptoWallet;
-
     private Integer doneOperations;
     private Integer reputation;
 
-    public User() {
+    public UserModel() {
         this.doneOperations = 0;
+        this.reputation = 0;
     }
 
     public String getName() {
@@ -109,7 +113,12 @@ public class User {
     }
 
     public void discountReputation(Integer point) {
-        this.reputation -= point;
+        if(point <= reputation) {
+            this.reputation -= point;
+        } else {
+            this.reputation = 0;
+        }
+
     }
 
     public String fullName() {
@@ -117,10 +126,7 @@ public class User {
     }
 
     public void processIntentionTo(Intention intention) {
-        if(isBuyer(intention)) {
-            intention.setStateProcess(StateProcess.IN_PROCESS);
-            intention.setUserTransaction(this);
-        } else if (isSeller(intention)) {
+        if(isBuyer(intention) || isSeller(intention)) {
             intention.setStateProcess(StateProcess.IN_PROCESS);
             intention.setUserTransaction(this);
         }
@@ -165,14 +171,14 @@ public class User {
 
     public Boolean isBuyer(Intention intention) {
 
-        return intention.getStateProcess() == StateProcess.ACTIVE
+        return intention.isStateProcess(StateProcess.ACTIVE)
                 && intention.getType() == OperationType.PURCHASE
                 && !isUserIntention(intention);
     }
 
     public Boolean isSeller(Intention intention) {
 
-        return intention.getStateProcess() == StateProcess.ACTIVE
+        return intention.isStateProcess(StateProcess.ACTIVE)
                 && intention.getType() == OperationType.SALE
                 && !isUserIntention(intention);
     }
