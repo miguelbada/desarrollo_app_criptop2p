@@ -1,0 +1,18 @@
+====== RELEASE NOTE  ==========
+desarrollo_app_criptop2p
+
+---------------------------------------------------------------------
+TAG v0.0.1 entrega 1
+---------------------------------------------------------------------
+NEW FEATURES:
+* Register a new user.
+
+NOTES:
+* Configure railway.
+* Need to finish implementing exceptions for crypto active.
+* Implement dtos.
+
+KNOWN ISSUES:
+* Coverage is not calculated yet.
+
+

@@ -1,6 +1,9 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.rest_webservice.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 public class UserModelDTO {
+    @NotNull(message = "username shouldn't be null")
     private String name;
     private String lastName;
 
