@@ -51,7 +51,7 @@ public class Intention {
     }
 
     public void setArgentineCurrency(Double argentineCurrency) {
-        argentineCurrency = argentineCurrency;
+        this.argentineCurrency = argentineCurrency;
     }
 
     public User getUser() {

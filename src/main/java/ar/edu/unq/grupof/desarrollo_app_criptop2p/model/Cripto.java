@@ -2,7 +2,6 @@ package ar.edu.unq.grupof.desarrollo_app_criptop2p.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-
 import java.time.LocalDateTime;
 
 @Builder
