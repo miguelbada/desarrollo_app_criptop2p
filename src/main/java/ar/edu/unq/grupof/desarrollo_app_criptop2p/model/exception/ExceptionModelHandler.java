@@ -11,7 +11,7 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class ExceptionModelHandler {
-   @ExceptionHandler(MethodArgumentNotValidException.class)
+   @ExceptionHandler(value = MethodArgumentNotValidException.class)
    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> handlerArgumentNotValid(MethodArgumentNotValidException exception) {
         Map<String, String > exceptionMap = new HashMap<>();

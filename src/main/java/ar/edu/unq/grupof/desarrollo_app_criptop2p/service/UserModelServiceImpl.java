@@ -5,6 +5,7 @@ import ar.edu.unq.grupof.desarrollo_app_criptop2p.persistence.UserModelRepositor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserModelServiceImpl implements UserModelService{
@@ -19,6 +20,12 @@ public class UserModelServiceImpl implements UserModelService{
     @Override
     public UserModel saveUserModel(UserModel userModel) {
         return repository.save(userModel);
+    }
+
+    @Override
+    public UserModel getUserModelByid(Integer id) {
+        return repository.findById(id).orElseThrow(() -> new Error("User not found by id: " + id));
+        //return repository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found by id: " + id));
     }
 
     @Override

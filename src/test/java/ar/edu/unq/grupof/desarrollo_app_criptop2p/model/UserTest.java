@@ -7,36 +7,36 @@ class UserTest {
 
     //----------- addDoneOperations ----------------
     @Test
-    void aUserCancelsThePurchaseIntentionInProcessAndNoAddDoneOperations() {
+    void aUserCancelsTheBuyIntentionInProcessAndNoAddDoneOperations() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
-        Intention intentionPurchase = Intention
+        Transaction intentionBuy = Transaction
                 .builder()
                 .user(miguel)
-                .type(OperationType.PURCHASE)
+                .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
                 .build();
 
-        juan.processIntentionTo(intentionPurchase);
-        miguel.cancelIntention(intentionPurchase);
+        juan.processIntentionTo(intentionBuy);
+        miguel.cancelIntention(intentionBuy);
 
         assertEquals(0, miguel.getDoneOperations());
         assertEquals(0, juan.getDoneOperations());
     }
 
     @Test
-    void otherUserCancelsThePurchaseIntentionInProcessAndNoAddDoneOperations() {
+    void otherUserCancelsTheBuyIntentionInProcessAndNoAddDoneOperations() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
-        Intention intentionPurchase = Intention
+        Transaction intentionBuy = Transaction
                 .builder()
                 .user(miguel)
-                .type(OperationType.PURCHASE)
+                .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
                 .build();
 
-        juan.processIntentionTo(intentionPurchase);
-        juan.cancelIntention(intentionPurchase);
+        juan.processIntentionTo(intentionBuy);
+        juan.cancelIntention(intentionBuy);
 
         assertEquals(0, miguel.getDoneOperations());
         assertEquals(0, juan.getDoneOperations());
@@ -46,7 +46,7 @@ class UserTest {
     void aUserCancelsTheSaleIntentionInProcessAndNoAddDoneOperations() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
-        Intention intentionPurchase = Intention
+        Transaction intentionPurchase = Transaction
                 .builder()
                 .user(miguel)
                 .type(OperationType.SALE)
@@ -64,7 +64,7 @@ class UserTest {
     void otherUserCancelsOtherSaleIntentionInProcessAndNoAddDoneOperations() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
-        Intention intentionPurchase = Intention
+        Transaction intentionPurchase = Transaction
                 .builder()
                 .user(miguel)
                 .type(OperationType.SALE)
@@ -81,7 +81,7 @@ class UserTest {
     void aUserCancelsTheSaleIntentionMakeTransferAndNoAddDoneOperations() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
-        Intention intentionSale = Intention
+        Transaction intentionSale = Transaction
                 .builder()
                 .user(miguel)
                 .type(OperationType.SALE)
@@ -99,7 +99,7 @@ class UserTest {
     void otherUserCancelsTheSaleIntentionMakeTransferAndNoAddDoneOperations() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
-        Intention intentionSale = Intention
+        Transaction intentionSale = Transaction
                 .builder()
                 .user(miguel)
                 .type(OperationType.SALE)
@@ -114,55 +114,55 @@ class UserTest {
     }
 
     @Test
-    void aUserCancelsThePurchaseIntentionMakeTransferAndNoAddDoneOperations() {
+    void aUserCancelsTheBuyIntentionMakeTransferAndNoAddDoneOperations() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
-        Intention intentionPurchase = Intention
+        Transaction intentionBuy = Transaction
                 .builder()
                 .user(miguel)
-                .type(OperationType.PURCHASE)
+                .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
                 .build();
 
-        juan.processIntentionTo(intentionPurchase);
-        miguel.makeTransfer(intentionPurchase);
+        juan.processIntentionTo(intentionBuy);
+        miguel.makeTransfer(intentionBuy);
 
         assertEquals(0, miguel.getDoneOperations());
         assertEquals(0, juan.getDoneOperations());
     }
 
     @Test
-    void otherUserCancelsThePurchaseIntentionMakeTransferAndNoAddDoneOperations() {
+    void otherUserCancelsTheBuyIntentionMakeTransferAndNoAddDoneOperations() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
-        Intention intentionPurchase = Intention
+        Transaction intentionBuy = Transaction
                 .builder()
                 .user(miguel)
-                .type(OperationType.PURCHASE)
+                .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
                 .build();
 
-        juan.processIntentionTo(intentionPurchase);
-        juan.makeTransfer(intentionPurchase);
+        juan.processIntentionTo(intentionBuy);
+        juan.makeTransfer(intentionBuy);
 
         assertEquals(0, miguel.getDoneOperations());
         assertEquals(0, juan.getDoneOperations());
     }
 
     @Test
-    void aUserAcceptThePurchaseIntentionMakeTransferAndAddDoneOperations() {
+    void aUserAcceptTheBuyIntentionMakeTransferAndAddDoneOperations() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
-        Intention intentionPurchase = Intention
+        Transaction intentionBuy = Transaction
                 .builder()
                 .user(miguel)
-                .type(OperationType.PURCHASE)
+                .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
                 .build();
 
-        juan.processIntentionTo(intentionPurchase);
-        miguel.makeTransfer(intentionPurchase);
-        juan.confirmReception(intentionPurchase);
+        juan.processIntentionTo(intentionBuy);
+        miguel.makeTransfer(intentionBuy);
+        juan.confirmReception(intentionBuy);
 
         assertEquals(1, miguel.getDoneOperations());
         assertEquals(1, juan.getDoneOperations());
@@ -172,7 +172,7 @@ class UserTest {
     void aUserAcceptTheSaleIntentionMakeTransferAndAddDoneOperations() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
-        Intention intentionSale = Intention
+        Transaction intentionSale = Transaction
                 .builder()
                 .user(miguel)
                 .type(OperationType.SALE)
@@ -190,34 +190,34 @@ class UserTest {
     // -------------- Reputation --------------------------
 
     @Test
-    void aUserCancelsThePurchaseIntentionActiveAndNoAddReputation() {
+    void aUserCancelsTheBuyIntentionActiveAndNoAddReputation() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
-        Intention intentionPurchase = Intention
+        Transaction intentionBuy = Transaction
                 .builder()
                 .user(miguel)
-                .type(OperationType.PURCHASE)
+                .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
                 .build();
 
-        miguel.cancelIntention(intentionPurchase);
+        miguel.cancelIntention(intentionBuy);
 
         assertEquals(100, miguel.getReputation());
         assertEquals(100, juan.getReputation());
     }
 
     @Test
-    void otherUserCancelsThePurchaseIntentionActiveAndNoAddReputation() {
+    void otherUserCancelsTheBuyIntentionActiveAndNoAddReputation() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
-        Intention intentionPurchase = Intention
+        Transaction intentionBuy = Transaction
                 .builder()
                 .user(miguel)
-                .type(OperationType.PURCHASE)
+                .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
                 .build();
 
-        juan.cancelIntention(intentionPurchase);
+        juan.cancelIntention(intentionBuy);
 
         assertEquals(100, miguel.getReputation());
         assertEquals(100, juan.getReputation());
@@ -227,7 +227,7 @@ class UserTest {
     void aUserCancelsTheSaleIntentionActiveAndNoAddReputation() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
-        Intention intentionSale = Intention
+        Transaction intentionSale = Transaction
                 .builder()
                 .user(miguel)
                 .type(OperationType.SALE)
@@ -244,7 +244,7 @@ class UserTest {
     void otherUserCancelsTheSaleIntentionActiveAndNoAddReputation() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
-        Intention intentionSale = Intention
+        Transaction intentionSale = Transaction
                 .builder()
                 .user(miguel)
                 .type(OperationType.SALE)
@@ -258,36 +258,36 @@ class UserTest {
     }
 // stateProcess In_Process
     @Test
-    void aUserCancelsThePurchaseIntentionInProgressAndDiscountReputation() {
+    void aUserCancelsTheBuyIntentionInProgressAndDiscountReputation() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
-        Intention intentionPurchase = Intention
+        Transaction intentionBuy = Transaction
                 .builder()
                 .user(miguel)
-                .type(OperationType.PURCHASE)
+                .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
                 .build();
 
-        juan.processIntentionTo(intentionPurchase);
-        miguel.cancelIntention(intentionPurchase);
+        juan.processIntentionTo(intentionBuy);
+        miguel.cancelIntention(intentionBuy);
 
         assertEquals(80, miguel.getReputation());
         assertEquals(100, juan.getReputation());
     }
 
     @Test
-    void otherUserCancelsThePurchaseIntentionInProgressAndDiscountReputation() {
+    void otherUserCancelsTheBuyIntentionInProgressAndDiscountReputation() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
-        Intention intentionPurchase = Intention
+        Transaction intentionBuy = Transaction
                 .builder()
                 .user(miguel)
-                .type(OperationType.PURCHASE)
+                .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
                 .build();
 
-        juan.processIntentionTo(intentionPurchase);
-        juan.cancelIntention(intentionPurchase);
+        juan.processIntentionTo(intentionBuy);
+        juan.cancelIntention(intentionBuy);
 
         assertEquals(100, miguel.getReputation());
         assertEquals(80, juan.getReputation());
@@ -297,7 +297,7 @@ class UserTest {
     void aUserCancelsTheSaleIntentionInProgressAndDiscountReputation() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
-        Intention intentionSale = Intention
+        Transaction intentionSale = Transaction
                 .builder()
                 .user(miguel)
                 .type(OperationType.SALE)
@@ -315,7 +315,7 @@ class UserTest {
     void otherUserCancelsTheSaleIntentionInProgressAndDiscountReputation() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
-        Intention intentionSale = Intention
+        Transaction intentionSale = Transaction
                 .builder()
                 .user(miguel)
                 .type(OperationType.SALE)
@@ -330,41 +330,60 @@ class UserTest {
     }
 
     @Test
-    void aUserCancelsThePurchaseIntentionMakeTransactionAndDiscountReputation() {
+    void aUserCancelsTheBuyIntentionMakeTransactionAndDiscountReputation() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
-        Intention intentionPurchase = Intention
+        Transaction intentionBuy = Transaction
                 .builder()
                 .user(miguel)
-                .type(OperationType.PURCHASE)
+                .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
                 .build();
 
-        juan.processIntentionTo(intentionPurchase);
-        miguel.makeTransfer(intentionPurchase);
-        miguel.cancelIntention(intentionPurchase);
+        juan.processIntentionTo(intentionBuy);
+        miguel.makeTransfer(intentionBuy);
+        miguel.cancelIntention(intentionBuy);
 
         assertEquals(80, miguel.getReputation());
         assertEquals(100, juan.getReputation());
     }
 
     @Test
-    void otherUserCancelsThePurchaseIntentionMakeTransactionAndDiscountReputation() {
+    void otherUserCancelsTheBuyIntentionMakeTransactionAndDiscountReputation() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(100).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
-        Intention intentionPurchase = Intention
+        Transaction intentionBuy = Transaction
                 .builder()
                 .user(miguel)
-                .type(OperationType.PURCHASE)
+                .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
                 .build();
 
-        juan.processIntentionTo(intentionPurchase);
-        miguel.makeTransfer(intentionPurchase);
-        juan.cancelIntention(intentionPurchase);
+        juan.processIntentionTo(intentionBuy);
+        miguel.makeTransfer(intentionBuy);
+        juan.cancelIntention(intentionBuy);
 
         assertEquals(100, miguel.getReputation());
         assertEquals(80, juan.getReputation());
+    }
+
+    @Test
+    void aUserCancelsTheBuyIntentionMakeTransactionAndDiscountReputationToZero() {
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(10).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
+        Transaction intentionBuy = Transaction
+                .builder()
+                .user(miguel)
+                .type(OperationType.BUY)
+                .stateProcess(StateProcess.ACTIVE)
+                .build();
+
+        juan.processIntentionTo(intentionBuy);
+        miguel.makeTransfer(intentionBuy);
+        miguel.cancelIntention(intentionBuy);
+
+        assertEquals(0, miguel.getReputation());
+        assertEquals(100, juan.getReputation());
     }
 
 }

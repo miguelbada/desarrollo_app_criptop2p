@@ -1,8 +1,10 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.rest_webservice;
 
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.UserModel;
+import ar.edu.unq.grupof.desarrollo_app_criptop2p.rest_webservice.dto.UserModelDTO;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.service.UserModelService;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,18 +13,27 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class UserModelController {
     @Autowired
     private UserModelService service;
+    private final ModelMapper mapper = new ModelMapper();
 
-    @GetMapping("/users")
+    @GetMapping("/all")
     public ResponseEntity<List<UserModel>> getAllUserModel() {
         return ResponseEntity.ok().body(service.findAllUser());
     }
 
-    @PostMapping("/SignUp")
-    public ResponseEntity<UserModel> userSignUp(@Valid @RequestBody UserModel userModel) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.saveUserModel(userModel));
+    @PostMapping("/sign_up")
+    public ResponseEntity<UserModel> userSignUp(@RequestBody @Valid UserModelDTO newUser) {
+        UserModel user = mapper.map(newUser, UserModel.class);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.saveUserModel(user));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserModel> findUserById(@PathVariable Integer id) {
+        return ResponseEntity.ok().body(service.getUserModelByid(id));
+    }
+
 }

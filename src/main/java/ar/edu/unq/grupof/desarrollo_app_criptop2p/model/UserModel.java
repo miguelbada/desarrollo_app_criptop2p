@@ -1,13 +1,11 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.model;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-
 import java.util.Objects;
 
 @Builder
@@ -125,16 +123,16 @@ public class UserModel {
         return name + " " + lastName;
     }
 
-    public void processIntentionTo(Intention intention) {
+    public void processIntentionTo(Transaction intention) {
         if(isBuyer(intention) || isSeller(intention)) {
             intention.setStateProcess(StateProcess.IN_PROCESS);
             intention.setUserTransaction(this);
         }
     }
 
-    public void makeTransfer(Intention intention) {
+    public void makeTransfer(Transaction intention) {
         if(intention.isStateProcess(StateProcess.IN_PROCESS)
-                && ((intention.isType(OperationType.PURCHASE)
+                && ((intention.isType(OperationType.BUY)
                     && isUserIntention(intention))
                     || (isUserTransaction(intention)
                     && intention.isType(OperationType.SALE)))) {
@@ -142,19 +140,19 @@ public class UserModel {
         }
     }
 
-    public void confirmReception(Intention intention) {
+    public void confirmReception(Transaction intention) {
         if(intention.isStateProcess(StateProcess.MAKE_TRANSFER)
                 && ((intention.isType(OperationType.SALE)
                         && isUserIntention(intention))
                         || (isUserTransaction(intention)
-                        && intention.isType(OperationType.PURCHASE)))) {
+                        && intention.isType(OperationType.BUY)))) {
             intention.setStateProcess(StateProcess.PROCESSED);
             intention.getUser().addDoneOperation();
             intention.getUserTransaction().addDoneOperation();
         }
     }
 
-    public void cancelIntention(Intention intention) {
+    public void cancelIntention(Transaction intention) {
         if(isUserIntention(intention) && intention.isStateProcess(StateProcess.ACTIVE)) {
             intention.setStateProcess(StateProcess.CANCEL);
         } else if((intention.isStateProcess(StateProcess.IN_PROCESS)
@@ -169,26 +167,29 @@ public class UserModel {
 
     }
 
-    public Boolean isBuyer(Intention intention) {
+    public Boolean isBuyer(Transaction intention) {
 
         return intention.isStateProcess(StateProcess.ACTIVE)
-                && intention.getType() == OperationType.PURCHASE
+                && intention.getType() == OperationType.BUY
                 && !isUserIntention(intention);
     }
 
-    public Boolean isSeller(Intention intention) {
+    public Boolean isSeller(Transaction intention) {
 
         return intention.isStateProcess(StateProcess.ACTIVE)
                 && intention.getType() == OperationType.SALE
                 && !isUserIntention(intention);
     }
 
-    public Boolean isUserIntention(Intention intention) {
+    public Boolean isUserIntention(Transaction intention) {
         return Objects.equals(intention.getUser().fullName(), this.fullName());
     }
 
-    public Boolean isUserTransaction(Intention intention) {
+    public Boolean isUserTransaction(Transaction intention) {
         return Objects.equals(intention.getUserTransaction().fullName(), fullName());
     }
 
+    public Transaction createTransaction(Cripto cripto, Double criptoQuantity, Double criptoQuote, Double argentineCurrency, OperationType type) {
+        return new Transaction(cripto, this, criptoQuantity, criptoQuote, argentineCurrency, type);
+    }
 }
