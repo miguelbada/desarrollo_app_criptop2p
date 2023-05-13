@@ -7,7 +7,9 @@ import java.util.Optional;
 
 public interface UserModelService {
     List<UserModel> findAllUser();
+
+    Optional<UserModel> findUserModelByUsername(String username);
     UserModel saveUserModel(UserModel userModel);
-    UserModel getUserModelByid(Integer id);
-    void deleteUserModel(Integer id);
+    UserModel getUserModelById(Long id);
+    void deleteUserModel(Long id);
 }

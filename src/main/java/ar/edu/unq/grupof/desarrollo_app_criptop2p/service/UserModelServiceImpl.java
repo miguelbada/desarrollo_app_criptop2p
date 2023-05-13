@@ -1,8 +1,11 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.service;
 
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.UserModel;
+import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.exception.UserNotFoundException;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.persistence.UserModelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -12,24 +15,34 @@ public class UserModelServiceImpl implements UserModelService{
     @Autowired
     private UserModelRepository repository;
 
+    @Autowired
+    private PasswordEncoder encoder;
+
     @Override
     public List<UserModel> findAllUser() {
         return repository.findAll();
     }
 
     @Override
+    public Optional<UserModel> findUserModelByUsername(String username) {
+        return Optional.ofNullable(repository.findUserModelByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not foung by username " + username)));
+    }
+
+    @Override
     public UserModel saveUserModel(UserModel userModel) {
+        userModel.setPassword(encoder.encode(userModel.getPassword()));
+
         return repository.save(userModel);
     }
 
     @Override
-    public UserModel getUserModelByid(Integer id) {
-        return repository.findById(id).orElseThrow(() -> new Error("User not found by id: " + id));
-        //return repository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found by id: " + id));
+    public UserModel getUserModelById(Long id) {
+        return repository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found by id: " + id));
     }
 
     @Override
-    public void deleteUserModel(Integer id) {
+    public void deleteUserModel(Long id) {
         repository.deleteById(id);
     }
+
 }

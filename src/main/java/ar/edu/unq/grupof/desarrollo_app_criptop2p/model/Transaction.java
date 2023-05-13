@@ -3,8 +3,6 @@ package ar.edu.unq.grupof.desarrollo_app_criptop2p.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import org.springframework.lang.Nullable;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -15,7 +13,7 @@ import java.util.Objects;
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     @Basic
     private LocalDateTime dateTime;
@@ -55,6 +53,22 @@ public class Transaction {
         this.criptoQuote = criptoQuote;
         this.argentineCurrency = argentineCurrency;
         this.type = type;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public Cripto getCripto() {
@@ -129,6 +143,17 @@ public class Transaction {
         return Objects.equals(getType(), operationType);
     }
 
+    public boolean isSafePrice() {
+        if(!Objects.equals(cripto, null) ) {
+            Double priceCripto = cripto.getPrice() * this.criptoQuantity;
+            Double priceIntention = this.criptoQuote;
+            Double percent = (priceIntention * 100.0) / priceCripto;
+
+            return 105.0 >= percent && 95 <= percent;
+        }
+        return true;
+    }
+
     private LocalDateTime getCurrentDate() {
         LocalDateTime dateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss.SSS");
@@ -136,4 +161,5 @@ public class Transaction {
 
         return LocalDateTime.parse(text, formatter);
     }
+
 }

@@ -32,8 +32,8 @@ public class UserModelController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserModel> findUserById(@PathVariable Integer id) {
-        return ResponseEntity.ok().body(service.getUserModelByid(id));
+    public ResponseEntity<UserModel> findUserById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(service.getUserModelById(id));
     }
 
 }

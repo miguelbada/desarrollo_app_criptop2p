@@ -1,7 +1,8 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.model;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class TransactionTest {
 
@@ -375,6 +376,32 @@ class TransactionTest {
         juan.cancelIntention(intentionBuy);
 
         assertEquals(StateProcess.PROCESSED, intentionBuy.getStateProcess());
+    }
+
+    //------------------ safePrice ------------------
+
+    @Test
+    void isSafePriceTransactionWhit5PercentDifference() {
+        Cripto cripto = Cripto.builder().price(100.0).build();
+        Transaction intentionBuy = Transaction.builder().cripto(cripto).criptoQuantity(1.0).criptoQuote(105.0).build();
+
+        assertTrue(intentionBuy.isSafePrice());
+    }
+
+    @Test
+    void isSafePriceTransactionWhitLess5PercentDifference() {
+        Cripto cripto = Cripto.builder().price(130.0).build();
+        Transaction intentionBuy = Transaction.builder().cripto(cripto).criptoQuantity(0.5).criptoQuote(63.0).build();
+
+        assertTrue(intentionBuy.isSafePrice());
+    }
+
+    @Test
+    void NotisSafePriceTransactionWhitMore5PercentDifference() {
+        Cripto cripto = Cripto.builder().price(130.0).build();
+        Transaction intentionBuy = Transaction.builder().cripto(cripto).criptoQuantity(0.5).criptoQuote(83.0).build();
+
+        assertFalse(intentionBuy.isSafePrice());
     }
 
 }

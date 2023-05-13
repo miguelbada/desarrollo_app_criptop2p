@@ -34,7 +34,7 @@ public class TransactionController {
     }
 
     @PostMapping("/create/{id}/{simbol}/{criptoQuantity}/{criptoQuote}/{argentineCurrency}/{type}")
-    public ResponseEntity<Transaction> saveTransaction(@PathVariable Integer id,
+    public ResponseEntity<Transaction> saveTransaction(@PathVariable Long id,
                                                        @PathVariable String simbol,
                                                        @PathVariable Double criptoQuantity,
                                                        @PathVariable Double criptoQuote,
@@ -42,7 +42,7 @@ public class TransactionController {
                                                        @PathVariable OperationType type) {
 
         Cripto cripto = serviceCripto.getCriptoBySymbol(simbol);
-        UserModel user = serviceUserModel.getUserModelByid(id);
+        UserModel user = serviceUserModel.getUserModelById(id);
         Transaction transaction = user.createTransaction(cripto, criptoQuantity, criptoQuote, argentineCurrency, type);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(serviceTransaction.saveTransaction(transaction));

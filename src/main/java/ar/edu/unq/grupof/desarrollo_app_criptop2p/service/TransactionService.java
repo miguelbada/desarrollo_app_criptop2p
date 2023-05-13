@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface TransactionService {
     List<Transaction> findAllTransactions();
     Transaction saveTransaction(Transaction transaction);
-    Transaction getTransactionById(Integer id);
+    Transaction getTransactionById(Long id);
 }

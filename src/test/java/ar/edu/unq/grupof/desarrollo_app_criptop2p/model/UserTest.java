@@ -1,7 +1,9 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.model;
 
+import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.exception.TransactionNotProcessException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class UserTest {
 
@@ -384,6 +386,152 @@ class UserTest {
 
         assertEquals(0, miguel.getReputation());
         assertEquals(100, juan.getReputation());
+    }
+
+    // --------------- AutoCancel------------------------
+    //---------SALE--------------
+    @Test
+    public void aUserAcceptTheSaleIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesTo5Percent() {
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        Cripto cripto = Cripto.builder().price(100.0).build();
+        Transaction intentionSale = Transaction
+                .builder()
+                .cripto(cripto)
+                .user(miguel)
+                .criptoQuantity(1.0)
+                .criptoQuote(105.0)
+                .type(OperationType.SALE)
+                .stateProcess(StateProcess.ACTIVE)
+                .build();
+
+        juan.processIntentionTo(intentionSale);
+        juan.makeTransfer(intentionSale);
+        miguel.confirmReception(intentionSale);
+
+        assertEquals(StateProcess.PROCESSED, intentionSale.getStateProcess());
+    }
+
+    @Test
+    public void aUserAcceptTheSaleIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesToLess5Percent() {
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        Cripto cripto = Cripto.builder().price(130.0).build();
+        Transaction intentionSale = Transaction
+                .builder()
+                .cripto(cripto)
+                .user(miguel)
+                .criptoQuantity(0.5)
+                .criptoQuote(63.0)
+                .type(OperationType.SALE)
+                .stateProcess(StateProcess.ACTIVE)
+                .build();
+
+        juan.processIntentionTo(intentionSale);
+        juan.makeTransfer(intentionSale);
+        miguel.confirmReception(intentionSale);
+
+        assertEquals(StateProcess.PROCESSED, intentionSale.getStateProcess());
+    }
+
+    @Test
+    public void aUserAcceptTheSaleIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesToMore5Percent() {
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        Cripto cripto = Cripto.builder().price(130.0).build();
+        Transaction intentionSale = Transaction
+                .builder()
+                .cripto(cripto)
+                .user(miguel)
+                .criptoQuantity(0.5)
+                .criptoQuote(83.0)
+                .type(OperationType.SALE)
+                .stateProcess(StateProcess.ACTIVE)
+                .build();
+
+        juan.processIntentionTo(intentionSale);
+        juan.makeTransfer(intentionSale);
+        miguel.confirmReception(intentionSale);
+
+        Throwable exception = assertThrows(TransactionNotProcessException.class, () -> {
+            throw new TransactionNotProcessException("the transaction is canceled due to price difference");
+        });
+
+        assertEquals(StateProcess.CANCEL, intentionSale.getStateProcess());
+        assertEquals("the transaction is canceled due to price difference", exception.getMessage());
+    }
+
+    //--------------BUY---------------
+
+    @Test
+    public void aUserAcceptTheBuyIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesTo5Percent() {
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        Cripto cripto = Cripto.builder().price(100.0).build();
+        Transaction intentionSale = Transaction
+                .builder()
+                .cripto(cripto)
+                .user(miguel)
+                .criptoQuantity(1.0)
+                .criptoQuote(105.0)
+                .type(OperationType.BUY)
+                .stateProcess(StateProcess.ACTIVE)
+                .build();
+
+        juan.processIntentionTo(intentionSale);
+        miguel.makeTransfer(intentionSale);
+        juan.confirmReception(intentionSale);
+
+        assertEquals(StateProcess.PROCESSED, intentionSale.getStateProcess());
+    }
+
+    @Test
+    public void aUserAcceptTheBuyIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesToLess5Percent() {
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        Cripto cripto = Cripto.builder().price(130.0).build();
+        Transaction intentionSale = Transaction
+                .builder()
+                .cripto(cripto)
+                .user(miguel)
+                .criptoQuantity(0.5)
+                .criptoQuote(63.0)
+                .type(OperationType.BUY)
+                .stateProcess(StateProcess.ACTIVE)
+                .build();
+
+        juan.processIntentionTo(intentionSale);
+        miguel.makeTransfer(intentionSale);
+        juan.confirmReception(intentionSale);
+
+        assertEquals(StateProcess.PROCESSED, intentionSale.getStateProcess());
+    }
+
+    @Test
+    public void aUserAcceptTheBuyIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesToMore5Percent() {
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        Cripto cripto = Cripto.builder().price(130.0).build();
+        Transaction intentionSale = Transaction
+                .builder()
+                .cripto(cripto)
+                .user(miguel)
+                .criptoQuantity(0.5)
+                .criptoQuote(83.0)
+                .type(OperationType.BUY)
+                .stateProcess(StateProcess.ACTIVE)
+                .build();
+
+        juan.processIntentionTo(intentionSale);
+        miguel.makeTransfer(intentionSale);
+        juan.confirmReception(intentionSale);
+
+        Throwable exception = assertThrows(TransactionNotProcessException.class, () -> {
+            throw new TransactionNotProcessException("the transaction is canceled due to price difference");
+        });
+
+        assertEquals(StateProcess.CANCEL, intentionSale.getStateProcess());
+        assertEquals("the transaction is canceled due to price difference", exception.getMessage());
     }
 
 }
