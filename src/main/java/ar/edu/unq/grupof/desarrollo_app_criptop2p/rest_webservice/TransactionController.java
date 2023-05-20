@@ -1,9 +1,6 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.rest_webservice;
 
-import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.Cripto;
-import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.OperationType;
-import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.Transaction;
-import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.UserModel;
+import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.*;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.service.CriptoService;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.service.TransactionService;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.service.UserModelService;
@@ -46,6 +43,11 @@ public class TransactionController {
         Transaction transaction = user.createTransaction(cripto, criptoQuantity, criptoQuote, argentineCurrency, type);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(serviceTransaction.saveTransaction(transaction));
+    }
+
+    @GetMapping("/active")
+    public ResponseEntity<List<Transaction>> allTransactionActive() {
+        return ResponseEntity.ok().body(serviceTransaction.findAllTransactionsByStateProcess(StateProcess.ACTIVE));
     }
 
 }

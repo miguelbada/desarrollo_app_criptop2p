@@ -1,14 +1,13 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.model;
 
-import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.exception.TransactionNotFoundException;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.exception.TransactionNotProcessException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import org.modelmapper.internal.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -31,6 +30,8 @@ public class UserModel implements UserDetails {
 
     @Column(nullable = false, unique = true)
     private String username;
+
+    @Column(nullable = false, unique = true)
     private String email;
     private String address;
     private String password;
@@ -42,6 +43,7 @@ public class UserModel implements UserDetails {
     private Integer reputation;
 
     public UserModel() {
+        this.roles = new ArrayList<>();
         this.doneOperations = 0;
         this.reputation = 0;
     }
@@ -62,7 +64,7 @@ public class UserModel implements UserDetails {
         this.roles = roles;
     }
 
-    public void addRol(Role role) {
+    public void addRole(Role role) {
         this.roles.add(role);
     }
 

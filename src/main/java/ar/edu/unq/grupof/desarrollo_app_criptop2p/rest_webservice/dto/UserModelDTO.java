@@ -1,6 +1,10 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.rest_webservice.dto;
 
+import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.Role;
+import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.RoleType;
+import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.UserModel;
 import jakarta.validation.constraints.*;
+import org.modelmapper.ModelMapper;
 
 public class UserModelDTO {
     @Size(min = 3, max = 30, message = "name must be between 3 and 30 characters")
@@ -84,6 +88,15 @@ public class UserModelDTO {
 
     public void setCryptoWallet(String cryptoWallet) {
         this.cryptoWallet = cryptoWallet;
+    }
+
+    public UserModel mapperToEntity() {
+        ModelMapper mapper = new ModelMapper();
+        UserModel user = mapper.map(this, UserModel.class);
+
+        user.setUsername(user.getEmail());
+
+        return user;
     }
 
 }

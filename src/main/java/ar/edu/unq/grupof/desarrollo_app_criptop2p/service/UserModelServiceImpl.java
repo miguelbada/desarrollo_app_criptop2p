@@ -29,6 +29,11 @@ public class UserModelServiceImpl implements UserModelService{
     }
 
     @Override
+    public Optional<UserModel> findUserModelByEmail(String email) {
+        return Optional.ofNullable(repository.findUserModelByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not foung by email " + email)));
+    }
+
+    @Override
     public UserModel saveUserModel(UserModel userModel) {
         userModel.setPassword(encoder.encode(userModel.getPassword()));
 

@@ -1,5 +1,6 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.service;
 
+import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.StateProcess;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.Transaction;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.exception.TransactionNotFoundException;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.persistence.TransactionRepository;
@@ -26,6 +27,11 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transaction getTransactionById(Long id) {
         return repository.findById(id).orElseThrow(() -> new TransactionNotFoundException("Transaction not found by id: " + id));
+    }
+
+    @Override
+    public List<Transaction> findAllTransactionsByStateProcess(StateProcess process) {
+        return repository.findTransactionByStateProcess(process);
     }
 
 }

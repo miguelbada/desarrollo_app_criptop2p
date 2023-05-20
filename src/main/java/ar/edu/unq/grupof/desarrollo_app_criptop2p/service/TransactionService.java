@@ -1,5 +1,6 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.service;
 
+import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.StateProcess;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.Transaction;
 
 import java.util.List;
@@ -9,4 +10,5 @@ public interface TransactionService {
     List<Transaction> findAllTransactions();
     Transaction saveTransaction(Transaction transaction);
     Transaction getTransactionById(Long id);
+    List<Transaction> findAllTransactionsByStateProcess(StateProcess process);
 }
