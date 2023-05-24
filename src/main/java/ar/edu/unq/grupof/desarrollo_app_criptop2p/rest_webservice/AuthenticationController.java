@@ -10,12 +10,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -35,5 +37,16 @@ public class AuthenticationController {
     @PostMapping("/refresh-token")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         service.refreshToken(request, response);
+    }
+
+   /* @GetMapping("/currentusername")
+    public String currentUserName(@CurrentSecurityContext(expression = "authentication") Authentication authentication) {
+        return authentication.getName();
+    }*/
+
+    @GetMapping("/currentusername")
+    public String currentUserName(HttpServletRequest request) {
+
+        return service.getUserToken(request).getName();
     }
 }

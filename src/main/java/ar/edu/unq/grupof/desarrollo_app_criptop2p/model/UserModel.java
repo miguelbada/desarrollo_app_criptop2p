@@ -7,6 +7,7 @@ import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -178,8 +179,14 @@ public class UserModel implements UserDetails {
         return true;
     }
 
-    public void addReputation(Integer points) {
-        this.reputation += points;
+    public void addReputation(Transaction transaction) {
+        LocalDateTime dateTime = LocalDateTime.now();
+        if(transaction.getDateTime().isAfter(dateTime.minusMinutes(30))) {
+            this.reputation += 10;
+        } else {
+            this.reputation += 5;
+        }
+
     }
 
     public void discountReputation(Integer point) {
@@ -224,7 +231,10 @@ public class UserModel implements UserDetails {
                     && intention.isType(OperationType.BUY)))) {
                 intention.setStateProcess(StateProcess.PROCESSED);
                 intention.getUser().addDoneOperation();
+                intention.getUser().addReputation(intention);
                 intention.getUserTransaction().addDoneOperation();
+                intention.getUserTransaction().addReputation(intention);
+
             }
 
         } catch (Exception error) {

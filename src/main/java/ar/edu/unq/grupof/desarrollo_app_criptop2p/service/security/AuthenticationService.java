@@ -121,4 +121,26 @@ public class AuthenticationService {
         }
     }
 
+    public UserModel getUserToken(HttpServletRequest request) {
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        final String refreshToken;
+        final String userEmail;
+
+        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
+            return null;
+        }
+
+        refreshToken = authHeader.substring(7);
+        userEmail = jwtService.extractUsername(refreshToken);
+
+        if (userEmail != null) {
+            UserModel user = this.userService.findUserModelByEmail(userEmail)
+                    .orElseThrow();
+            if (jwtService.isTokenValid(refreshToken, user)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
 }

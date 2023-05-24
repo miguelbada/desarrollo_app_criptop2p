@@ -8,7 +8,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -50,4 +55,34 @@ public class TransactionController {
         return ResponseEntity.ok().body(serviceTransaction.findAllTransactionsByStateProcess(StateProcess.ACTIVE));
     }
 
+    @PutMapping("/process_intention/{id}/{user_id}")
+    public ResponseEntity<Transaction> processTransaction(@PathVariable Long id, @PathVariable Long user_id) {
+        UserModel user = serviceUserModel.getUserModelById(user_id);
+        Transaction transaction = serviceTransaction.getTransactionById(id);
+
+        user.processIntentionTo(transaction);
+
+        return ResponseEntity.ok().body(serviceTransaction.saveTransaction(transaction));
+    }
+
+    @PutMapping("/make_transfer/{id}/{user_id}")
+    public ResponseEntity<Transaction> makeTransfer(@PathVariable Long id, @PathVariable Long user_id) {
+        UserModel user = serviceUserModel.getUserModelById(user_id);
+        Transaction transaction = serviceTransaction.getTransactionById(id);
+
+        user.makeTransfer(transaction);
+
+        return ResponseEntity.ok().body(serviceTransaction.saveTransaction(transaction));
+    }
+
+    @PutMapping("/confirm_reception/{id}/{user_id}")
+    public ResponseEntity<Transaction> confirmTransaction(@PathVariable Long id, @PathVariable Long user_id) {
+        UserModel user = serviceUserModel.getUserModelById(user_id);
+        Transaction transaction = serviceTransaction.getTransactionById(id);
+
+        user.confirmReception(transaction);
+
+        return ResponseEntity.ok().body(serviceTransaction.saveTransaction(transaction));
+    }
+    
 }

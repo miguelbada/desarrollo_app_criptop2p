@@ -41,6 +41,7 @@ public class CriptoServiceImpl implements CriptoService {
 
         for (Cripto crypto : cryptos) {
             crypto.setArgentineCurrency(argentinePesos);
+            crypto.generateHistoricalPrice();
         }
 
         return cryptos;

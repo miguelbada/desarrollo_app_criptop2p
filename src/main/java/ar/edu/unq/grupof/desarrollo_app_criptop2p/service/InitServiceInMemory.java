@@ -1,9 +1,6 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.service;
 
-import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.Cripto;
-import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.Role;
-import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.RoleType;
-import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.UserModel;
+import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.apache.commons.logging.Log;
@@ -30,6 +27,9 @@ public class InitServiceInMemory {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private TransactionService transactionService;
 
     @PostConstruct
     public void initialize() {
@@ -91,12 +91,21 @@ public class InitServiceInMemory {
 
         roleService.saveRole(roleAdmin);
         roleService.saveRole(roleUser);
-        userModelService.saveUserModel(miguel);
-        userModelService.saveUserModel(martin);
+        UserModel miguel2 = userModelService.saveUserModel(miguel);
+        UserModel martin2 = userModelService.saveUserModel(martin);
         userModelService.saveUserModel(juan);
 
         List<Cripto> criptos = criptoService.getBinanceCryptos();
         criptos.forEach(cripto -> criptoService.saveCripto(cripto));
 
+        Transaction transactionIntention = martin.createTransaction(criptos.get(0),1.0, criptos.get(0).getPrice(), criptos.get(0).getArgentineCurrency(), OperationType.BUY);
+
+        Transaction transaction = transactionService.saveTransaction(transactionIntention);
+
+        miguel.processIntentionTo(transactionIntention);
+        martin.makeTransfer(transactionIntention);
+        miguel.confirmReception(transactionIntention);
+
+        transactionService.updateTransaction(transaction.getId(), transactionIntention);
     }
 }
