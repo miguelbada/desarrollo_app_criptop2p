@@ -2,6 +2,9 @@ package ar.edu.unq.grupof.desarrollo_app_criptop2p.model;
 
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.exception.TransactionNotProcessException;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -153,10 +156,11 @@ class UserTest {
 
     @Test
     void aUserAcceptTheBuyIntentionMakeTransferAndAddDoneOperations() {
-        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
-        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(0).build();
         Transaction intentionBuy = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
@@ -172,10 +176,11 @@ class UserTest {
 
     @Test
     void aUserAcceptTheSaleIntentionMakeTransferAndAddDoneOperations() {
-        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
-        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(0).build();
         Transaction intentionSale = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.SALE)
                 .stateProcess(StateProcess.ACTIVE)
