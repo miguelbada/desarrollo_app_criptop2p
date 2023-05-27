@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -38,8 +39,8 @@ public class WebSecurityConfig {
                         "/swagger-resources",
                         "/swagger-resources/**",
                         "/swagger-ui/**",
-                        "/swagger-ui.html")
-                .permitAll()
+                        "/swagger-ui.html").permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -48,6 +49,8 @@ public class WebSecurityConfig {
                 .and()
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+        http.headers().frameOptions().disable(); // Database H2 web
 
         return http.build();
     }

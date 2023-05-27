@@ -1,13 +1,8 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.rest_webservice.dto;
 
-import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.Cripto;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.Transaction;
-
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class OperationVolumenReport {
     private LocalDateTime dateTime;

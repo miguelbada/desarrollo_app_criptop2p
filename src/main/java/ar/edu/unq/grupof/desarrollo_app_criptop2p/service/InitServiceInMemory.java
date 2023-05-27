@@ -51,7 +51,7 @@ public class InitServiceInMemory {
                 .roles(Arrays.asList(roleAdmin))
                 .name("Miguel")
                 .lastName("Bada")
-                .username("migue")
+                .username("miguel@gmail.com")
                 .email("miguel@gmail.com")
                 .address("Monroe 1234")
                 .password("123456/aB")
@@ -65,7 +65,7 @@ public class InitServiceInMemory {
                 .roles(Arrays.asList(roleUser))
                 .name("Martin")
                 .lastName("Perez")
-                .username("martin")
+                .username("martin@gmail.com")
                 .email("martin@gmail.com")
                 .address("Marmol 1234")
                 .password("123456/aB")
@@ -79,7 +79,7 @@ public class InitServiceInMemory {
                 .roles(Arrays.asList(roleUser))
                 .name("Juan")
                 .lastName("Gomez")
-                .username("juanjo")
+                .username("juan@gmail.com")
                 .email("juan@gmail.com")
                 .address("Rivadavia 1234")
                 .password("123456/aB")
@@ -91,14 +91,14 @@ public class InitServiceInMemory {
 
         roleService.saveRole(roleAdmin);
         roleService.saveRole(roleUser);
-        UserModel miguel2 = userModelService.saveUserModel(miguel);
-        UserModel martin2 = userModelService.saveUserModel(martin);
+        userModelService.saveUserModel(miguel);
+        userModelService.saveUserModel(martin);
         userModelService.saveUserModel(juan);
 
         List<Cripto> criptos = criptoService.getBinanceCryptos();
         criptos.forEach(cripto -> criptoService.saveCripto(cripto));
 
-        Transaction transactionIntention = martin.createTransaction(criptos.get(0),1.0, criptos.get(0).getPrice(), criptos.get(0).getArgentineCurrency(), OperationType.BUY);
+        Transaction transactionIntention = martin.createTransaction(criptos.get(0),1.0, criptos.get(0).getPrice(), OperationType.BUY);
 
         Transaction transaction = transactionService.saveTransaction(transactionIntention);
 

@@ -258,8 +258,8 @@ public class UserModel implements UserDetails {
 
     }
 
-    public Transaction createTransaction(Cripto cripto, Double criptoQuantity, Double criptoQuote, Double argentineCurrency, OperationType type) {
-        return new Transaction(cripto, this, criptoQuantity, criptoQuote, argentineCurrency, type);
+    public Transaction createTransaction(Cripto cripto, Double criptoQuantity, Double criptoQuote, OperationType type) {
+        return new Transaction(cripto, this, criptoQuantity, criptoQuote, type);
     }
 
     private Boolean isBuyer(Transaction intention) {

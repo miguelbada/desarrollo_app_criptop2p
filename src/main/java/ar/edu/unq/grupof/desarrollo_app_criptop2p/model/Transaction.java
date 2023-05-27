@@ -44,14 +44,14 @@ public class Transaction {
         this.stateProcess = StateProcess.ACTIVE;
     }
 
-    public Transaction(Cripto cripto, UserModel user, Double criptoQuantity, Double criptoQuote, Double argentineCurrency, OperationType type) {
+    public Transaction(Cripto cripto, UserModel user, Double criptoQuantity, Double criptoQuote, OperationType type) {
         this.dateTime = getCurrentDate();
         this.stateProcess = StateProcess.ACTIVE;
         this.cripto = cripto;
         this.user = user;
         this.criptoQuantity = criptoQuantity;
         this.criptoQuote = criptoQuote;
-        this.argentineCurrency = argentineCurrency;
+        this.argentineCurrency = cripto.getArgentineCurrencyQuotation() * criptoQuote;
         this.type = type;
     }
 
@@ -155,9 +155,9 @@ public class Transaction {
     }
 
     private LocalDateTime getCurrentDate() {
-        LocalDateTime dateTime = LocalDateTime.now();
+        LocalDateTime date = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss.SSS");
-        String text = dateTime.format(formatter);
+        String text = date.format(formatter);
 
         return LocalDateTime.parse(text, formatter);
     }

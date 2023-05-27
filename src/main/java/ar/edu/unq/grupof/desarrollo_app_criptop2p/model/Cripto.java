@@ -81,7 +81,11 @@ public class Cripto {
         return this.historicalPrices
                 .stream()
                 .filter(h -> h.getDateTime().isAfter(LocalDateTime.now().minusHours(24)))
-                .collect(Collectors.toList());
+                .toList();
+    }
+
+    public Double getArgentineCurrencyQuotation() {
+        return this.argentineCurrency / this.price;
     }
 
 }

@@ -1,7 +1,5 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.rest_webservice.dto;
 
-import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.Role;
-import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.RoleType;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.UserModel;
 import jakarta.validation.constraints.*;
 import org.modelmapper.ModelMapper;

@@ -55,7 +55,11 @@ public class CriptoServiceImpl implements CriptoService {
 
         response = restTemplate.getForObject(uri, HashMap.class);
 
-        return (Double) response.get("rates").get("ARS");
+        if(response != null) {
+            return (Double) response.get("rates").get("ARS");
+        } else {
+            return null;
+        }
     }
 
     private List<String> getSimbols() {

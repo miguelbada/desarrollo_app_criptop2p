@@ -24,8 +24,9 @@ public class UserModelServiceImpl implements UserModelService{
     }
 
     @Override
-    public Optional<UserModel> findUserModelByUsername(String username) {
-        return Optional.ofNullable(repository.findUserModelByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not foung by username " + username)));
+    public UserModel findUserModelByUsername(String username) {
+
+        return repository.findUserModelByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not foung by username " + username));
     }
 
     @Override

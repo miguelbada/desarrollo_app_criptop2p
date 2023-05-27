@@ -1,6 +1,8 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.rest_webservice;
 
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.*;
+import ar.edu.unq.grupof.desarrollo_app_criptop2p.rest_webservice.dto.TransactionDTO;
+import ar.edu.unq.grupof.desarrollo_app_criptop2p.rest_webservice.dto.TransactionRequestDTO;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.service.CriptoService;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.service.TransactionService;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.service.UserModelService;
@@ -14,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,33 +32,39 @@ public class TransactionController {
     UserModelService serviceUserModel;
 
     private final ModelMapper mapper = new ModelMapper();
+    private final TransactionDTO transactionDTO = new TransactionDTO();
 
     @GetMapping("/all")
-    public ResponseEntity<List<Transaction>> getAllTransactions() {
-        return ResponseEntity.ok(serviceTransaction.findAllTransactions());
+    public ResponseEntity<List<TransactionDTO>> getAllTransactions() {
+        List<Transaction> transactions = serviceTransaction.findAllTransactions();
+
+        return ResponseEntity.ok().body(transactionDTO.mapperToListDTO(transactions));
     }
 
-    @PostMapping("/create/{id}/{simbol}/{criptoQuantity}/{criptoQuote}/{argentineCurrency}/{type}")
-    public ResponseEntity<Transaction> saveTransaction(@PathVariable Long id,
-                                                       @PathVariable String simbol,
-                                                       @PathVariable Double criptoQuantity,
-                                                       @PathVariable Double criptoQuote,
-                                                       @PathVariable Double argentineCurrency,
-                                                       @PathVariable OperationType type) {
+    @PostMapping("/create")
+    public ResponseEntity<TransactionDTO> saveTransaction(@RequestBody TransactionRequestDTO request) {
 
-        Cripto cripto = serviceCripto.getCriptoBySymbol(simbol);
-        UserModel user = serviceUserModel.getUserModelById(id);
-        Transaction transaction = user.createTransaction(cripto, criptoQuantity, criptoQuote, argentineCurrency, type);
+        UserModel user = serviceUserModel.findUserModelByUsername(request.getUser());
+        Cripto cripto = serviceCripto.getCriptoBySymbol(request.getCripto());
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(serviceTransaction.saveTransaction(transaction));
+        Transaction transaction = user.createTransaction(
+                cripto,
+                request.getCriptoQuantity(),
+                request.getCriptoQuote(),
+                request.getType()
+        );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(transactionDTO.mapperToDTO(serviceTransaction.saveTransaction(transaction)));
     }
 
     @GetMapping("/active")
-    public ResponseEntity<List<Transaction>> allTransactionActive() {
-        return ResponseEntity.ok().body(serviceTransaction.findAllTransactionsByStateProcess(StateProcess.ACTIVE));
+    public ResponseEntity<List<TransactionDTO>> allTransactionActive() {
+        List<Transaction> transactions = serviceTransaction.findAllTransactionsByStateProcess(StateProcess.ACTIVE);
+
+        return ResponseEntity.ok().body(transactionDTO.mapperToListDTO(transactions));
     }
 
-    @PutMapping("/process_intention/{id}/{user_id}")
+    @PutMapping("/process_intention/{id}/user/{user_id}")
     public ResponseEntity<Transaction> processTransaction(@PathVariable Long id, @PathVariable Long user_id) {
         UserModel user = serviceUserModel.getUserModelById(user_id);
         Transaction transaction = serviceTransaction.getTransactionById(id);
@@ -65,7 +74,7 @@ public class TransactionController {
         return ResponseEntity.ok().body(serviceTransaction.saveTransaction(transaction));
     }
 
-    @PutMapping("/make_transfer/{id}/{user_id}")
+    @PutMapping("/make_transfer/{id}/user/{user_id}")
     public ResponseEntity<Transaction> makeTransfer(@PathVariable Long id, @PathVariable Long user_id) {
         UserModel user = serviceUserModel.getUserModelById(user_id);
         Transaction transaction = serviceTransaction.getTransactionById(id);
@@ -75,7 +84,7 @@ public class TransactionController {
         return ResponseEntity.ok().body(serviceTransaction.saveTransaction(transaction));
     }
 
-    @PutMapping("/confirm_reception/{id}/{user_id}")
+    @PutMapping("/confirm_reception/{id}/user/{user_id}")
     public ResponseEntity<Transaction> confirmTransaction(@PathVariable Long id, @PathVariable Long user_id) {
         UserModel user = serviceUserModel.getUserModelById(user_id);
         Transaction transaction = serviceTransaction.getTransactionById(id);

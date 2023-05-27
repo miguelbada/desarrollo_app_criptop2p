@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class CriptoTest {
+class CriptoTest {
     private static Cripto cripto;
 
     @BeforeEach
@@ -26,17 +26,17 @@ public class CriptoTest {
     }
 
     @Test
-    public void getHistoricalPricesReturnAllHistoricalPrice() {
+    void getHistoricalPricesReturnAllHistoricalPrice() {
         assertEquals(1, cripto.getHistoricalPrices().size());
     }
 
     @Test
-    public void getHistoricalPricesNotReturnHistoricalPriceWhitMinusOf24Hs() {
+    void getHistoricalPricesNotReturnHistoricalPriceWhitMinusOf24Hs() {
         assertTrue(cripto.getLas24tHs().isEmpty());
     }
 
     @Test
-    public void getHistoricalPricesReturnOneHistoricalPriceWhitMinusOf24Hs() {
+    void getHistoricalPricesReturnOneHistoricalPriceWhitMinusOf24Hs() {
         cripto.setPrice(11.0);
         cripto.setDateTime(LocalDateTime.now());
         cripto.generateHistoricalPrice();

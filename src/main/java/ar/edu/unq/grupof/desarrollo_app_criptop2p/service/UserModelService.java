@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface UserModelService {
     List<UserModel> findAllUser();
 
-    Optional<UserModel> findUserModelByUsername(String username);
+    UserModel findUserModelByUsername(String username);
     Optional<UserModel> findUserModelByEmail(String email);
     UserModel saveUserModel(UserModel userModel);
     UserModel getUserModelById(Long id);

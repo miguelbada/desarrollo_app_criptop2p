@@ -396,7 +396,7 @@ class UserTest {
     // --------------- AutoCancel------------------------
     //---------SALE--------------
     @Test
-    public void aUserAcceptTheSaleIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesTo5Percent() {
+    void aUserAcceptTheSaleIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesTo5Percent() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
         Cripto cripto = Cripto.builder().price(100.0).build();
@@ -418,7 +418,7 @@ class UserTest {
     }
 
     @Test
-    public void aUserAcceptTheSaleIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesToLess5Percent() {
+    void aUserAcceptTheSaleIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesToLess5Percent() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
         Cripto cripto = Cripto.builder().price(130.0).build();
@@ -440,7 +440,7 @@ class UserTest {
     }
 
     @Test
-    public void aUserAcceptTheSaleIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesToMore5Percent() {
+    void aUserAcceptTheSaleIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesToMore5Percent() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
         Cripto cripto = Cripto.builder().price(130.0).build();
@@ -469,7 +469,7 @@ class UserTest {
     //--------------BUY---------------
 
     @Test
-    public void aUserAcceptTheBuyIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesTo5Percent() {
+    void aUserAcceptTheBuyIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesTo5Percent() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
         Cripto cripto = Cripto.builder().price(100.0).build();
@@ -491,7 +491,7 @@ class UserTest {
     }
 
     @Test
-    public void aUserAcceptTheBuyIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesToLess5Percent() {
+    void aUserAcceptTheBuyIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesToLess5Percent() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
         Cripto cripto = Cripto.builder().price(130.0).build();
@@ -513,7 +513,7 @@ class UserTest {
     }
 
     @Test
-    public void aUserAcceptTheBuyIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesToMore5Percent() {
+    void aUserAcceptTheBuyIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesToMore5Percent() {
         UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
         Cripto cripto = Cripto.builder().price(130.0).build();
