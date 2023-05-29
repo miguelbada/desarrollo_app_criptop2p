@@ -2,9 +2,7 @@ package ar.edu.unq.grupof.desarrollo_app_criptop2p.model;
 
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.exception.TransactionNotProcessException;
 import org.junit.jupiter.api.Test;
-
 import java.time.LocalDateTime;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -17,6 +15,7 @@ class UserTest {
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Transaction intentionBuy = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
@@ -35,6 +34,7 @@ class UserTest {
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Transaction intentionBuy = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
@@ -53,6 +53,7 @@ class UserTest {
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Transaction intentionPurchase = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.SALE)
                 .stateProcess(StateProcess.ACTIVE)
@@ -71,6 +72,7 @@ class UserTest {
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Transaction intentionPurchase = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.SALE)
                 .stateProcess(StateProcess.ACTIVE)
@@ -84,10 +86,11 @@ class UserTest {
 
     @Test
     void aUserCancelsTheSaleIntentionMakeTransferAndNoAddDoneOperations() {
-        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
-        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(0).build();
         Transaction intentionSale = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.SALE)
                 .stateProcess(StateProcess.ACTIVE)
@@ -102,10 +105,11 @@ class UserTest {
 
     @Test
     void otherUserCancelsTheSaleIntentionMakeTransferAndNoAddDoneOperations() {
-        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
-        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(0).build();
         Transaction intentionSale = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.SALE)
                 .stateProcess(StateProcess.ACTIVE)
@@ -120,10 +124,11 @@ class UserTest {
 
     @Test
     void aUserCancelsTheBuyIntentionMakeTransferAndNoAddDoneOperations() {
-        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
-        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(0).build();
         Transaction intentionBuy = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
@@ -138,10 +143,11 @@ class UserTest {
 
     @Test
     void otherUserCancelsTheBuyIntentionMakeTransferAndNoAddDoneOperations() {
-        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
-        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(0).build();
         Transaction intentionBuy = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
@@ -202,6 +208,7 @@ class UserTest {
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Transaction intentionBuy = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
@@ -219,6 +226,7 @@ class UserTest {
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Transaction intentionBuy = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
@@ -236,6 +244,7 @@ class UserTest {
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Transaction intentionSale = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.SALE)
                 .stateProcess(StateProcess.ACTIVE)
@@ -253,6 +262,7 @@ class UserTest {
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Transaction intentionSale = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.SALE)
                 .stateProcess(StateProcess.ACTIVE)
@@ -270,6 +280,7 @@ class UserTest {
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Transaction intentionBuy = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
@@ -288,6 +299,7 @@ class UserTest {
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Transaction intentionBuy = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
@@ -306,6 +318,7 @@ class UserTest {
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Transaction intentionSale = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.SALE)
                 .stateProcess(StateProcess.ACTIVE)
@@ -324,6 +337,7 @@ class UserTest {
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Transaction intentionSale = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.SALE)
                 .stateProcess(StateProcess.ACTIVE)
@@ -342,6 +356,7 @@ class UserTest {
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Transaction intentionBuy = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
@@ -361,6 +376,7 @@ class UserTest {
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Transaction intentionBuy = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
@@ -380,6 +396,7 @@ class UserTest {
         UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(100).build();
         Transaction intentionBuy = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .user(miguel)
                 .type(OperationType.BUY)
                 .stateProcess(StateProcess.ACTIVE)
@@ -397,11 +414,12 @@ class UserTest {
     //---------SALE--------------
     @Test
     void aUserAcceptTheSaleIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesTo5Percent() {
-        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
-        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(0).build();
         Cripto cripto = Cripto.builder().price(100.0).build();
         Transaction intentionSale = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .cripto(cripto)
                 .user(miguel)
                 .criptoQuantity(1.0)
@@ -419,11 +437,12 @@ class UserTest {
 
     @Test
     void aUserAcceptTheSaleIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesToLess5Percent() {
-        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
-        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(0).build();
         Cripto cripto = Cripto.builder().price(130.0).build();
         Transaction intentionSale = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .cripto(cripto)
                 .user(miguel)
                 .criptoQuantity(0.5)
@@ -441,11 +460,12 @@ class UserTest {
 
     @Test
     void aUserAcceptTheSaleIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesToMore5Percent() {
-        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
-        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(0).build();
         Cripto cripto = Cripto.builder().price(130.0).build();
         Transaction intentionSale = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .cripto(cripto)
                 .user(miguel)
                 .criptoQuantity(0.5)
@@ -470,11 +490,12 @@ class UserTest {
 
     @Test
     void aUserAcceptTheBuyIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesTo5Percent() {
-        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
-        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(0).build();
         Cripto cripto = Cripto.builder().price(100.0).build();
         Transaction intentionSale = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .cripto(cripto)
                 .user(miguel)
                 .criptoQuantity(1.0)
@@ -492,11 +513,12 @@ class UserTest {
 
     @Test
     void aUserAcceptTheBuyIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesToLess5Percent() {
-        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
-        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(0).build();
         Cripto cripto = Cripto.builder().price(130.0).build();
         Transaction intentionSale = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .cripto(cripto)
                 .user(miguel)
                 .criptoQuantity(0.5)
@@ -514,11 +536,12 @@ class UserTest {
 
     @Test
     void aUserAcceptTheBuyIntentionMakeTransferAndNotAutoCancelTheTransactionForDiffToPricesToMore5Percent() {
-        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).build();
-        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).build();
+        UserModel miguel = UserModel.builder().name("Miguel").lastName("Bada").doneOperations(0).reputation(0).build();
+        UserModel juan = UserModel.builder().name("Juan").lastName("Gomez").doneOperations(0).reputation(0).build();
         Cripto cripto = Cripto.builder().price(130.0).build();
         Transaction intentionSale = Transaction
                 .builder()
+                .dateTime(LocalDateTime.now())
                 .cripto(cripto)
                 .user(miguel)
                 .criptoQuantity(0.5)
