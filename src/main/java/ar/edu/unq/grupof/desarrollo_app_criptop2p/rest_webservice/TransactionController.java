@@ -25,7 +25,6 @@ public class TransactionController {
     @Autowired
     UserModelService serviceUserModel;
 
-    private final ModelMapper mapper = new ModelMapper();
     private final TransactionDTO transactionDTO = new TransactionDTO();
 
     @GetMapping("/all")
@@ -48,7 +47,9 @@ public class TransactionController {
                 request.getType()
         );
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(transactionDTO.mapperToDTO(serviceTransaction.saveTransaction(transaction)));
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(transactionDTO.mapperToDTO(serviceTransaction.saveTransaction(transaction)));
     }
 
     @GetMapping("/active")
@@ -58,9 +59,9 @@ public class TransactionController {
         return ResponseEntity.ok().body(transactionDTO.mapperToListDTO(transactions));
     }
 
-    @PutMapping("/process_intention/{id}/user/{user_id}")
-    public ResponseEntity<Transaction> processTransaction(@PathVariable Long id, @PathVariable Long user_id) {
-        UserModel user = serviceUserModel.getUserModelById(user_id);
+    @PutMapping("/process_intention/{id}/user/{userId}")
+    public ResponseEntity<Transaction> processTransaction(@PathVariable Long id, @PathVariable Long userId) {
+        UserModel user = serviceUserModel.getUserModelById(userId);
         Transaction transaction = serviceTransaction.getTransactionById(id);
 
         user.processIntentionTo(transaction);
@@ -68,9 +69,9 @@ public class TransactionController {
         return ResponseEntity.ok().body(serviceTransaction.saveTransaction(transaction));
     }
 
-    @PutMapping("/make_transfer/{id}/user/{user_id}")
-    public ResponseEntity<Transaction> makeTransfer(@PathVariable Long id, @PathVariable Long user_id) {
-        UserModel user = serviceUserModel.getUserModelById(user_id);
+    @PutMapping("/make_transfer/{id}/user/{userId}")
+    public ResponseEntity<Transaction> makeTransfer(@PathVariable Long id, @PathVariable Long userId) {
+        UserModel user = serviceUserModel.getUserModelById(userId);
         Transaction transaction = serviceTransaction.getTransactionById(id);
 
         user.makeTransfer(transaction);
@@ -78,9 +79,9 @@ public class TransactionController {
         return ResponseEntity.ok().body(serviceTransaction.saveTransaction(transaction));
     }
 
-    @PutMapping("/confirm_reception/{id}/user/{user_id}")
-    public ResponseEntity<Transaction> confirmTransaction(@PathVariable Long id, @PathVariable Long user_id) {
-        UserModel user = serviceUserModel.getUserModelById(user_id);
+    @PutMapping("/confirm_reception/{id}/user/{userId}")
+    public ResponseEntity<Transaction> confirmTransaction(@PathVariable Long id, @PathVariable Long userId) {
+        UserModel user = serviceUserModel.getUserModelById(userId);
         Transaction transaction = serviceTransaction.getTransactionById(id);
 
         user.confirmReception(transaction);
