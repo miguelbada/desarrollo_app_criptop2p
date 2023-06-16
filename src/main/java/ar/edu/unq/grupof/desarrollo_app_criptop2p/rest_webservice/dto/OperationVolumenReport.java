@@ -1,20 +1,22 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.rest_webservice.dto;
 
+import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.Cripto;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.Transaction;
 import java.time.LocalDateTime;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OperationVolumenReport {
     private LocalDateTime dateTime;
     private Double totalPrice;
     private Double totalArgentinePesos;
-    private HashMap<String, CriptoReport> criptos;
+    private List<CriptoReport> criptos;
 
     public OperationVolumenReport() {
         this.dateTime = LocalDateTime.now();
         this.totalPrice = 0.0;
         this.totalArgentinePesos = 0.0;
-        this.criptos = new HashMap<>();
+        this.criptos = new ArrayList<>();
     }
 
     public LocalDateTime getDateTime() {
@@ -41,11 +43,11 @@ public class OperationVolumenReport {
         this.totalArgentinePesos = totalArgentinePesos;
     }
 
-    public HashMap<String, CriptoReport> getCriptos() {
+    public List<CriptoReport> getCriptos() {
         return criptos;
     }
 
-    public void setCriptos(HashMap<String, CriptoReport> criptos) {
+    public void setCriptos(List<CriptoReport> criptos) {
         this.criptos = criptos;
     }
 
@@ -58,25 +60,14 @@ public class OperationVolumenReport {
     }
 
     public void addCripto(Transaction transaction) {
-        String key = transaction.getCripto().getSymbol();
+        Cripto cripto = transaction.getCripto();
         CriptoReport report = new CriptoReport();
 
+        report.setSymbol(cripto.getSymbol());
         report.setCriptoQuantity(transaction.getCriptoQuantity());
-        report.setCriptoQuote(transaction.getCriptoQuote());
-        report.setArgentineCurrency(transaction.getArgentineCurrency());
+        report.setCriptoQuote(cripto.getPrice());
+        report.setArgentineCurrency(cripto.getArgentineCurrency());
 
-        if (this.criptos.containsKey(key)) {
-            Double criptoQuantity = this.criptos.get(key).getCriptoQuantity() + transaction.getCriptoQuantity();
-            Double criptoQuote = this.criptos.get(key).getCriptoQuote() + transaction.getCriptoQuote();
-            Double argentineCurrency = this.criptos.get(key).getArgentineCurrency() + transaction.getArgentineCurrency();
-
-            report.setCriptoQuantity(criptoQuantity);
-            report.setCriptoQuote(criptoQuote);
-            report.setArgentineCurrency(argentineCurrency);
-
-            this.criptos.put(key, report);
-        } else {
-            this.criptos.put(key, report);
-        }
+        this.criptos.add(report);
     }
 }

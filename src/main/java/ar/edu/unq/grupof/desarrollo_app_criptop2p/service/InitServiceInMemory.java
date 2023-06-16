@@ -8,13 +8,14 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
 @Transactional
 public class InitServiceInMemory {
     protected final Log logger = LogFactory.getLog(getClass());
+
+    private final DataDemo data = new DataDemo();
 
     @Value("${spring.datasource.driverClassName:NONE}")
     private String className;
@@ -47,65 +48,49 @@ public class InitServiceInMemory {
         Role roleAdmin = Role.builder().roleType(RoleType.ADMIN).build();
         Role roleUser = Role.builder().roleType(RoleType.USER).build();
 
-        UserModel miguel = UserModel.builder()
-                .roles(Arrays.asList(roleAdmin))
-                .name("Miguel")
-                .lastName("Bada")
-                .username("miguel@gmail.com")
-                .email("miguel@gmail.com")
-                .address("Monroe 1234")
-                .password("123456/aB")
-                .cvuMercadoPago("123456789abcdefghijklm")
-                .cryptoWallet("12345678")
-                .doneOperations(0)
-                .reputation(0)
-                .build();
+        UserModel miguel = data.getUsers().get(0);
+        miguel.addRole(roleAdmin);
 
-        UserModel martin = UserModel.builder()
-                .roles(Arrays.asList(roleUser))
-                .name("Martin")
-                .lastName("Perez")
-                .username("martin@gmail.com")
-                .email("martin@gmail.com")
-                .address("Marmol 1234")
-                .password("123456/aB")
-                .cvuMercadoPago("123456789abcdefghijkln")
-                .cryptoWallet("12345679")
-                .doneOperations(0)
-                .reputation(0)
-                .build();
+        UserModel nancy = data.getUsers().get(1);
+        nancy.addRole(roleUser);
 
-        UserModel juan = UserModel.builder()
-                .roles(Arrays.asList(roleUser))
-                .name("Juan")
-                .lastName("Gomez")
-                .username("juan@gmail.com")
-                .email("juan@gmail.com")
-                .address("Rivadavia 1234")
-                .password("123456/aB")
-                .cvuMercadoPago("123456789abcdefghijkln")
-                .cryptoWallet("12345680")
-                .doneOperations(0)
-                .reputation(0)
-                .build();
+        UserModel martin = data.getUsers().get(2);
+        martin.addRole(roleUser);
 
         roleService.saveRole(roleAdmin);
         roleService.saveRole(roleUser);
         userModelService.saveUserModel(miguel);
+        userModelService.saveUserModel(nancy);
         userModelService.saveUserModel(martin);
-        userModelService.saveUserModel(juan);
 
         List<Cripto> criptos = criptoService.getBinanceCryptos();
         criptos.forEach(cripto -> criptoService.saveCripto(cripto));
 
-        Transaction transactionIntention = martin.createTransaction(criptos.get(0),1.0, criptos.get(0).getPrice(), OperationType.BUY);
+        Transaction transactionMartin1 = martin.createTransaction(criptos.get(0),1.0, criptos.get(0).getPrice(), OperationType.BUY);
+        Transaction transactionMartin2 = martin.createTransaction(criptos.get(1), 2.0, criptos.get(1).getPrice(), OperationType.BUY);
+        Transaction transactionMartin3 = martin.createTransaction(criptos.get(0),1.5, criptos.get(0).getPrice(), OperationType.BUY);
+        Transaction transactionNancy = nancy.createTransaction(criptos.get(3), 3.0, criptos.get(3).getPrice(), OperationType.SALE);
 
-        Transaction transaction = transactionService.saveTransaction(transactionIntention);
+        Transaction transactionMartin1Save = transactionService.saveTransaction(transactionMartin1);
+        Transaction transactionMartin2Save = transactionService.saveTransaction(transactionMartin2);
+        Transaction transactionMartin3Save = transactionService.saveTransaction(transactionMartin3);
+        transactionService.saveTransaction(transactionNancy);
 
-        miguel.processIntentionTo(transactionIntention);
-        martin.makeTransfer(transactionIntention);
-        miguel.confirmReception(transactionIntention);
+        miguel.processIntentionTo(transactionMartin1);
+        martin.makeTransfer(transactionMartin1);
+        miguel.confirmReception(transactionMartin1);
 
-        transactionService.updateTransaction(transaction.getId(), transactionIntention);
+        nancy.processIntentionTo(transactionMartin2);
+        martin.makeTransfer(transactionMartin2);
+        nancy.confirmReception(transactionMartin2);
+
+        miguel.processIntentionTo(transactionMartin3);
+        martin.makeTransfer(transactionMartin3);
+        miguel.confirmReception(transactionMartin3);
+
+
+        transactionService.updateTransaction(transactionMartin1Save.getId(), transactionMartin1);
+        transactionService.updateTransaction(transactionMartin2Save.getId(), transactionMartin2);
+        transactionService.updateTransaction(transactionMartin3Save.getId(), transactionMartin3);
     }
 }

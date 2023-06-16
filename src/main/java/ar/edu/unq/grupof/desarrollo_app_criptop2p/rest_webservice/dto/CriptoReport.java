@@ -1,6 +1,7 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.rest_webservice.dto;
 
 public class CriptoReport {
+    private String symbol;
     private Double criptoQuantity;
     private Double criptoQuote;
     private Double argentineCurrency;
@@ -9,6 +10,14 @@ public class CriptoReport {
         this.criptoQuantity = 0.0;
         this.criptoQuote = 0.0;
         this.argentineCurrency = 0.0;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public Double getCriptoQuantity() {

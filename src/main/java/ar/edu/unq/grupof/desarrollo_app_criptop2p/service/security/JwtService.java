@@ -1,5 +1,8 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.service.security;
 
+import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.RoleType;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -9,8 +12,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import java.security.Key;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -37,7 +44,6 @@ public class JwtService {
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
-
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
@@ -82,6 +88,20 @@ public class JwtService {
     private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+
+
+
+    public String issue(Long userId, String email, List<String> roles) {
+        return JWT
+                .create()
+                .withSubject(String.valueOf(userId))
+                .withExpiresAt(Instant.now().plus(Duration.of(1, ChronoUnit.DAYS)))
+                .withClaim("email", email)
+                .withClaim("roles", roles)
+                .sign(Algorithm.HMAC256("secret"));
+
     }
 
 }

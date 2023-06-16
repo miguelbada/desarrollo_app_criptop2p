@@ -145,13 +145,13 @@ public class Transaction {
 
     public boolean isSafePrice() {
         if(!Objects.equals(cripto, null) ) {
-            Double priceCripto = cripto.getPrice() * this.criptoQuantity;
+            Double priceCripto = cripto.getPrice();
             Double priceIntention = this.criptoQuote;
             Double percent = (priceIntention * 100.0) / priceCripto;
 
             return 105.0 >= percent && 95 <= percent;
         }
-        return true;
+        return false;
     }
 
     private LocalDateTime getCurrentDate() {

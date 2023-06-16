@@ -6,8 +6,6 @@ public class TransactionRequestDTO {
     private String cripto;
     private Double criptoQuantity;
     private Double criptoQuote;
-    private String user;
-    private String userTransaction;
     private OperationType type;
 
     public TransactionRequestDTO() {
@@ -35,22 +33,6 @@ public class TransactionRequestDTO {
 
     public void setCriptoQuote(Double criptoQuote) {
         this.criptoQuote = criptoQuote;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public String getUserTransaction() {
-        return userTransaction;
-    }
-
-    public void setUserTransaction(String userTransaction) {
-        this.userTransaction = userTransaction;
     }
 
     public OperationType getType() {

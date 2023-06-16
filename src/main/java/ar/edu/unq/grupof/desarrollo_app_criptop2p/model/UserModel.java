@@ -277,11 +277,11 @@ public class UserModel implements UserDetails {
     }
 
     private Boolean isUserIntention(Transaction intention) {
-        return Objects.equals(intention.getUser().fullName(), this.fullName());
+        return Objects.equals(intention.getUser().getUsername(), this.username);
     }
 
     private Boolean isUserTransaction(Transaction intention) {
-        return Objects.equals(intention.getUserTransaction().fullName(), fullName());
+        return Objects.equals(intention.getUserTransaction().getUsername(), this.username);
     }
 
 }

@@ -4,7 +4,11 @@ import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.UserModel;
 import jakarta.validation.constraints.*;
 import org.modelmapper.ModelMapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserModelDTO {
+    private final ModelMapper mapper = new ModelMapper();
     @Size(min = 3, max = 30, message = "name must be between 3 and 30 characters")
     private String name;
 
@@ -29,7 +33,6 @@ public class UserModelDTO {
     private String cryptoWallet;
 
     public UserModelDTO() {
-        //Use for Hibernate
     }
 
     public String getName() {
@@ -89,12 +92,26 @@ public class UserModelDTO {
     }
 
     public UserModel mapperToEntity() {
-        ModelMapper mapper = new ModelMapper();
+
         UserModel user = mapper.map(this, UserModel.class);
 
         user.setUsername(user.getEmail());
 
         return user;
+    }
+
+    public UserModelDTO mapperToDTO(UserModel user) {
+        return mapper.map(user, UserModelDTO.class);
+    }
+
+    public List<UserModelDTO> mapperToListDTO(List<UserModel> users) {
+        List<UserModelDTO> userDTOs = new ArrayList<>();
+
+        for(UserModel user: users) {
+            userDTOs.add(this.mapperToDTO(user));
+        }
+
+        return userDTOs;
     }
 
 }

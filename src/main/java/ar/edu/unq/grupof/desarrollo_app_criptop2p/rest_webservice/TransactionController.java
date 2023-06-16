@@ -6,6 +6,8 @@ import ar.edu.unq.grupof.desarrollo_app_criptop2p.rest_webservice.dto.Transactio
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.service.CriptoService;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.service.TransactionService;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.service.UserModelService;
+import ar.edu.unq.grupof.desarrollo_app_criptop2p.service.security.AuthenticationService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,13 +19,16 @@ import java.util.List;
 @RequestMapping("/api/transaction")
 public class TransactionController {
     @Autowired
-    TransactionService serviceTransaction;
+    private TransactionService serviceTransaction;
 
     @Autowired
-    CriptoService serviceCripto;
+    private CriptoService serviceCripto;
 
     @Autowired
-    UserModelService serviceUserModel;
+    private UserModelService serviceUserModel;
+
+    @Autowired
+    private AuthenticationService authService;
 
     private final TransactionDTO transactionDTO = new TransactionDTO();
 
@@ -35,16 +40,16 @@ public class TransactionController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<TransactionDTO> saveTransaction(@RequestBody TransactionRequestDTO request) {
+    public ResponseEntity<TransactionDTO> saveTransaction(HttpServletRequest request, @RequestBody TransactionRequestDTO transactionRequest) {
 
-        UserModel user = serviceUserModel.findUserModelByUsername(request.getUser());
-        Cripto cripto = serviceCripto.getCriptoBySymbol(request.getCripto());
+        UserModel user = authService.getUserToken(request);
+        Cripto cripto = serviceCripto.getCriptoBySymbol(transactionRequest.getCripto());
 
         Transaction transaction = user.createTransaction(
                 cripto,
-                request.getCriptoQuantity(),
-                request.getCriptoQuote(),
-                request.getType()
+                transactionRequest.getCriptoQuantity(),
+                transactionRequest.getCriptoQuote(),
+                transactionRequest.getType()
         );
 
         return ResponseEntity
@@ -59,34 +64,34 @@ public class TransactionController {
         return ResponseEntity.ok().body(transactionDTO.mapperToListDTO(transactions));
     }
 
-    @PutMapping("/process_intention/{id}/user/{userId}")
-    public ResponseEntity<Transaction> processTransaction(@PathVariable Long id, @PathVariable Long userId) {
-        UserModel user = serviceUserModel.getUserModelById(userId);
+    @PutMapping("/process_intention/{id}")
+    public ResponseEntity<Transaction> processTransaction(HttpServletRequest request, @PathVariable Long id) {
+        UserModel user = authService.getUserToken(request);
         Transaction transaction = serviceTransaction.getTransactionById(id);
 
         user.processIntentionTo(transaction);
 
-        return ResponseEntity.ok().body(serviceTransaction.saveTransaction(transaction));
+        return ResponseEntity.ok().body(serviceTransaction.updateTransaction(id, transaction));
     }
 
-    @PutMapping("/make_transfer/{id}/user/{userId}")
-    public ResponseEntity<Transaction> makeTransfer(@PathVariable Long id, @PathVariable Long userId) {
-        UserModel user = serviceUserModel.getUserModelById(userId);
+    @PutMapping("/make_transfer/{id}")
+    public ResponseEntity<Transaction> makeTransfer(HttpServletRequest request, @PathVariable Long id) {
+        UserModel user = authService.getUserToken(request);
         Transaction transaction = serviceTransaction.getTransactionById(id);
 
         user.makeTransfer(transaction);
 
-        return ResponseEntity.ok().body(serviceTransaction.saveTransaction(transaction));
+        return ResponseEntity.ok().body(serviceTransaction.updateTransaction(id, transaction));
     }
 
-    @PutMapping("/confirm_reception/{id}/user/{userId}")
-    public ResponseEntity<Transaction> confirmTransaction(@PathVariable Long id, @PathVariable Long userId) {
-        UserModel user = serviceUserModel.getUserModelById(userId);
+    @PutMapping("/confirm_reception/{id}")
+    public ResponseEntity<Transaction> confirmTransaction(HttpServletRequest request, @PathVariable Long id) {
+        UserModel user = authService.getUserToken(request);
         Transaction transaction = serviceTransaction.getTransactionById(id);
 
         user.confirmReception(transaction);
 
-        return ResponseEntity.ok().body(serviceTransaction.saveTransaction(transaction));
+        return ResponseEntity.ok().body(serviceTransaction.updateTransaction(id, transaction));
     }
     
 }
