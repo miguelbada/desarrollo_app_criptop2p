@@ -144,8 +144,8 @@ public class Transaction {
     }
 
     public boolean isSafePrice() {
-        if(!Objects.equals(cripto, null) ) {
-            Double priceCripto = cripto.getPrice();
+        if(!Objects.equals(this.cripto, null) ) {
+            Double priceCripto = this.cripto.getPrice();
             Double priceIntention = this.criptoQuote;
             Double percent = (priceIntention * 100.0) / priceCripto;
 

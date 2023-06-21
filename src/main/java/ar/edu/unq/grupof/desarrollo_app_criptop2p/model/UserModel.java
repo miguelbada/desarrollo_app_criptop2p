@@ -198,10 +198,6 @@ public class UserModel implements UserDetails {
 
     }
 
-    public String fullName() {
-        return name + " " + lastName;
-    }
-
     public void processIntentionTo(Transaction intention) {
         if(isBuyer(intention) || isSeller(intention)) {
             intention.setStateProcess(StateProcess.IN_PROCESS);
