@@ -1,8 +1,12 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +14,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @Entity
-public class Cripto {
+public class Cripto implements Serializable {
     @Id
     private String symbol;
 
@@ -19,7 +23,9 @@ public class Cripto {
     private Double price;
     private Double argentineCurrency;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "cripto_id")
+
     private List<HistoricalPrice> historicalPrices;
 
     public Cripto() {

@@ -9,8 +9,6 @@ import lombok.Builder;
 public class AuthenticationResponse {
     @JsonProperty("access_token")
     private String accessToken;
-    @JsonProperty("refresh_token")
-    private String refreshToken;
 
     public AuthenticationResponse() {
     }
@@ -23,11 +21,4 @@ public class AuthenticationResponse {
         this.accessToken = accessToken;
     }
 
-    public String getRefreshToken() {
-        return refreshToken;
-    }
-
-    public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
-    }
 }

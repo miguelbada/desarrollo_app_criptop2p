@@ -28,6 +28,7 @@ import java.io.IOException;
 public class AuthenticationService {
     @Autowired
     private RoleService roleService;
+
     @Autowired
     private UserModelService userService;
 
@@ -35,10 +36,8 @@ public class AuthenticationService {
     private TokenService tokenService;
 
     @Autowired
-    private PasswordEncoder encoder;
-
-    @Autowired
     private JwtService jwtService;
+
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(UserModelDTO request) {
@@ -46,12 +45,10 @@ public class AuthenticationService {
         user.addRole(roleService.findByRoleType(RoleType.USER));
         UserModel savedUser = userService.saveUserModel(user);
         String jwtToken = jwtService.generateToken(user);
-        String refreshToken = jwtService.generateRefreshToken(user);
 
         saveUserToken(savedUser, jwtToken);
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
-                .refreshToken(refreshToken)
                 .build();
     }
 
@@ -63,14 +60,12 @@ public class AuthenticationService {
         UserModel user = userService.findUserModelByEmail(request.getEmail()).orElseThrow(() -> new UserNotFoundException("User not found"));
 
             String jwtToken = jwtService.generateToken(user);
-            String refreshToken = jwtService.generateRefreshToken(user);
 
             revokeAllUserTokens(user);
             saveUserToken(user, jwtToken);
 
             return AuthenticationResponse.builder()
                     .accessToken(jwtToken)
-                    .refreshToken(refreshToken)
                     .build();
     }
 
@@ -96,47 +91,22 @@ public class AuthenticationService {
         tokenService.saveAll(validUserTokens);
     }
 
-    public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        final String refreshToken;
-        final String userEmail;
-        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
-            return;
-        }
-        refreshToken = authHeader.substring(7);
-        userEmail = jwtService.extractUsername(refreshToken);
-        if (userEmail != null) {
-            var user = this.userService.findUserModelByEmail(userEmail)
-                    .orElseThrow();
-            if (jwtService.isTokenValid(refreshToken, user)) {
-                var accessToken = jwtService.generateToken(user);
-                revokeAllUserTokens(user);
-                saveUserToken(user, accessToken);
-                var authResponse = AuthenticationResponse.builder()
-                        .accessToken(accessToken)
-                        .refreshToken(refreshToken)
-                        .build();
-                new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
-            }
-        }
-    }
-
     public UserModel getUserToken(HttpServletRequest request) {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        final String refreshToken;
+        final String accsessToken;
         final String userEmail;
 
         if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
             return null;
         }
 
-        refreshToken = authHeader.substring(7);
-        userEmail = jwtService.extractUsername(refreshToken);
+        accsessToken = authHeader.substring(7);
+        userEmail = jwtService.extractUsername(accsessToken);
 
         if (userEmail != null) {
             UserModel user = this.userService.findUserModelByEmail(userEmail)
                     .orElseThrow();
-            if (jwtService.isTokenValid(refreshToken, user)) {
+            if (jwtService.isTokenValid(accsessToken, user)) {
                 return user;
             }
         }

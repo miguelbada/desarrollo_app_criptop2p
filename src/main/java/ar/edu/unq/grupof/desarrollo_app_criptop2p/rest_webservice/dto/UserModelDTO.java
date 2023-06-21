@@ -3,7 +3,6 @@ package ar.edu.unq.grupof.desarrollo_app_criptop2p.rest_webservice.dto;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.UserModel;
 import jakarta.validation.constraints.*;
 import org.modelmapper.ModelMapper;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +31,12 @@ public class UserModelDTO {
     @Size(min = 8, max = 8, message = "The length of cryptoWallet must have of 8 characters")
     private String cryptoWallet;
 
+    private Integer doneOperations;
+    private Integer reputation;
+
     public UserModelDTO() {
+        this.doneOperations = 0;
+        this.reputation = 0;
     }
 
     public String getName() {
@@ -89,6 +93,22 @@ public class UserModelDTO {
 
     public void setCryptoWallet(String cryptoWallet) {
         this.cryptoWallet = cryptoWallet;
+    }
+
+    public Integer getDoneOperations() {
+        return doneOperations;
+    }
+
+    public void setDoneOperations(Integer doneOperations) {
+        this.doneOperations = doneOperations;
+    }
+
+    public Integer getReputation() {
+        return reputation;
+    }
+
+    public void setReputation(Integer reputation) {
+        this.reputation = reputation;
     }
 
     public UserModel mapperToEntity() {

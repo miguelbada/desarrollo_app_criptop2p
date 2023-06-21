@@ -2,10 +2,11 @@ package ar.edu.unq.grupof.desarrollo_app_criptop2p.model;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-public class HistoricalPrice {
+public class HistoricalPrice implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

@@ -4,7 +4,6 @@ import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.Cripto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @Repository
 public interface CriptoRepository extends JpaRepository<Cripto, String> {

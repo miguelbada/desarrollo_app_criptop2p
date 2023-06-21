@@ -5,10 +5,9 @@ import ar.edu.unq.grupof.desarrollo_app_criptop2p.persistence.CriptoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
+import org.springframework.cache.annotation.Cacheable;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class CriptoServiceImpl implements CriptoService {
@@ -16,6 +15,7 @@ public class CriptoServiceImpl implements CriptoService {
     private CriptoRepository repository;
 
     @Override
+    @Cacheable(value = "allCriptoCache")
     public List<Cripto> findAllCriptos() {
         return repository.findAll();
     }
@@ -28,6 +28,11 @@ public class CriptoServiceImpl implements CriptoService {
     @Override
     public Cripto getCriptoBySymbol(String symbol) {
         return repository.findBySymbol(symbol).orElseThrow(() -> new Error("Cripto not found by symbol: " + symbol));
+    }
+
+    @Override
+    public void updateAllCripto(List<Cripto> criptos) {
+        repository.saveAll(criptos);
     }
 
     @Override
@@ -80,5 +85,16 @@ public class CriptoServiceImpl implements CriptoService {
                 "AUDIOUSDT"
         ));
     }
+
+    public void initialiceCryptos() {
+        List<Cripto> criptos = getBinanceCryptos();
+
+        for (Cripto cripto : criptos) {
+            cripto.generateHistoricalPrice();
+        }
+
+        repository.saveAll(criptos);
+    }
+
 
 }
