@@ -1,11 +1,9 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.model;
 
-import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.exception.TransactionNotProcessException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class UserTest {
     private static UserModel miguel;
@@ -451,7 +449,7 @@ class UserTest {
                 .dateTime(LocalDateTime.now())
                 .cripto(cripto)
                 .user(miguel)
-                .criptoQuantity(0.5)
+                .criptoQuantity(1.0)
                 .criptoQuote(83.0)
                 .type(OperationType.SALE)
                 .stateProcess(StateProcess.ACTIVE)
@@ -461,12 +459,7 @@ class UserTest {
         juan.makeTransfer(intentionSale);
         miguel.confirmReception(intentionSale);
 
-        Throwable exception = assertThrows(TransactionNotProcessException.class, () -> {
-            throw new TransactionNotProcessException("the transaction is canceled due to price difference");
-        });
-
         assertEquals(StateProcess.CANCEL, intentionSale.getStateProcess());
-        assertEquals("the transaction is canceled due to price difference", exception.getMessage());
     }
 
     //--------------BUY---------------
@@ -531,12 +524,7 @@ class UserTest {
         miguel.makeTransfer(intentionSale);
         juan.confirmReception(intentionSale);
 
-        Throwable exception = assertThrows(TransactionNotProcessException.class, () -> {
-            throw new TransactionNotProcessException("the transaction is canceled due to price difference");
-        });
-
         assertEquals(StateProcess.CANCEL, intentionSale.getStateProcess());
-        assertEquals("the transaction is canceled due to price difference", exception.getMessage());
     }
 
 }

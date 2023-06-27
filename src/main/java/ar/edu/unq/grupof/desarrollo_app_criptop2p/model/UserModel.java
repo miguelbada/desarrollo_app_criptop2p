@@ -216,10 +216,8 @@ public class UserModel implements UserDetails {
     }
 
     public void confirmReception(Transaction intention) {
-        try {
             if(!intention.isSafePrice()) {
                 intention.setStateProcess(StateProcess.CANCEL);
-                throw new TransactionNotProcessException("the transaction is canceled due to price difference");
             } else if(Objects.equals(intention.getStateProcess(), StateProcess.MAKE_TRANSFER)
                     && ((intention.isType(OperationType.SALE)
                     && isUserIntention(intention))
@@ -232,10 +230,6 @@ public class UserModel implements UserDetails {
                 intention.getUserTransaction().addReputation(intention);
 
             }
-
-        } catch (Exception error) {
-            throw new TransactionNotProcessException("error");
-        }
 
     }
 
