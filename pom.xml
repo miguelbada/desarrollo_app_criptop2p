@@ -20,6 +20,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<sonar.language>java</sonar.language>
 		<java.version>17</java.version>
+		<start-class>ar.edu.unq.grupof.desarrollo_app_criptop2p.DesarrolloAppCriptop2pApplication</start-class>
 		<sonar.organization>miguelbada</sonar.organization>
 		<sonar.projectKey>miguelbada_desarrollo_app_criptop2p</sonar.projectKey>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -155,7 +156,7 @@
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>
 					<configuration>
-						<mainClass>com.baeldung.demo.DemoApplication</mainClass>
+						<mainClass>ar.edu.unq.grupof.desarrollo_app_criptop2p.DesarrolloAppCriptop2pApplication</mainClass>
 						<layout>JAR</layout>
 						<excludes>
 							<exclude>
@@ -164,6 +165,13 @@
 							</exclude>
 						</excludes>
 					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>repackage</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 
 				<plugin>
