@@ -16,9 +16,6 @@ public class DesarrolloAppCriptop2pApplication {
 		SpringApplication.run(DesarrolloAppCriptop2pApplication.class, args);
 	}
 
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
+
 
 }

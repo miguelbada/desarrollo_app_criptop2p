@@ -11,17 +11,13 @@ import ar.edu.unq.grupof.desarrollo_app_criptop2p.rest_webservice.dto.UserModelD
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.service.RoleService;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.service.TokenService;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.service.UserModelService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
@@ -54,10 +50,10 @@ public class AuthenticationService {
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()));
+                        request.email(),
+                        request.password()));
 
-        UserModel user = userService.findUserModelByEmail(request.getEmail()).orElseThrow(() -> new UserNotFoundException("User not found"));
+        UserModel user = userService.findUserModelByEmail(request.email()).orElseThrow(() -> new UserNotFoundException("User not found"));
 
             String jwtToken = jwtService.generateToken(user);
 

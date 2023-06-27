@@ -26,8 +26,6 @@ import java.util.List;
 public class CriptoController {
     @Autowired
     private CriptoService service;
-    private final CriptoDTO criptoDTO = new CriptoDTO();
-
 
     @Operation(summary = "Get all criptoactives", responses = {
             @ApiResponse(description = "Succes", responseCode = "200", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = CriptoDTO.class)))),
@@ -38,7 +36,7 @@ public class CriptoController {
     public ResponseEntity<List<CriptoDTO>> getAllCriptos() {
         List<Cripto> criptos = service.findAllCriptos();
 
-        return ResponseEntity.ok().body(criptoDTO.mapperToListCriptoDTO(criptos));
+        return ResponseEntity.ok().body(this.mapperToListCriptoDTO(criptos));
     }
 
 
@@ -71,6 +69,16 @@ public class CriptoController {
         }
 
         return dtoList;
+    }
+
+    private List<CriptoDTO> mapperToListCriptoDTO(List<Cripto> criptos) {
+        List<CriptoDTO> criptoDTOs = new ArrayList<>();
+
+        for (Cripto cripto: criptos) {
+            criptoDTOs.add(new CriptoDTO(cripto.getSymbol(), cripto.getDateTime(), cripto.getPrice(), cripto.getArgentineCurrency()));
+        }
+
+        return criptoDTOs;
     }
 
 }

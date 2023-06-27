@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,9 +34,6 @@ public class TransactionController {
     @Autowired
     private AuthenticationService authService;
 
-    private final TransactionDTO transactionDTO = new TransactionDTO();
-
-
     @Operation(summary = "Get all transactions", responses = {
             @ApiResponse(description = "Succes", responseCode = "200", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = TransactionDTO.class)))),
             @ApiResponse(description = "Unauthorized or Invalid Token", responseCode = "403"),
@@ -44,7 +43,7 @@ public class TransactionController {
     public ResponseEntity<List<TransactionDTO>> getAllTransactions() {
         List<Transaction> transactions = serviceTransaction.findAllTransactions();
 
-        return ResponseEntity.ok().body(transactionDTO.mapperToListDTO(transactions));
+        return ResponseEntity.ok().body(this.mapperToListDTO(transactions));
     }
 
 
@@ -57,18 +56,18 @@ public class TransactionController {
     public ResponseEntity<TransactionDTO> saveTransaction(HttpServletRequest request, @RequestBody TransactionRequestDTO transactionRequest) {
 
         UserModel user = authService.getUserToken(request);
-        Cripto cripto = serviceCripto.getCriptoBySymbol(transactionRequest.getCripto());
+        Cripto cripto = serviceCripto.getCriptoBySymbol(transactionRequest.cripto());
 
         Transaction transaction = user.createTransaction(
                 cripto,
-                transactionRequest.getCriptoQuantity(),
-                transactionRequest.getCriptoQuote(),
-                transactionRequest.getType()
+                transactionRequest.criptoQuantity(),
+                transactionRequest.criptoQuote(),
+                transactionRequest.type()
         );
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(transactionDTO.mapperToDTO(serviceTransaction.saveTransaction(transaction)));
+                .body(this.mapperToDTO(serviceTransaction.saveTransaction(transaction)));
     }
 
 
@@ -81,7 +80,7 @@ public class TransactionController {
     public ResponseEntity<List<TransactionDTO>> allTransactionActive() {
         List<Transaction> transactions = serviceTransaction.findAllTransactionsByStateProcess(StateProcess.ACTIVE);
 
-        return ResponseEntity.ok().body(transactionDTO.mapperToListDTO(transactions));
+        return ResponseEntity.ok().body(this.mapperToListDTO(transactions));
     }
 
 
@@ -115,6 +114,30 @@ public class TransactionController {
         user.confirmReception(transaction);
 
         return ResponseEntity.ok().body(serviceTransaction.updateTransaction(id, transaction));
+    }
+
+    private TransactionDTO mapperToDTO(Transaction transaction) {
+        return new TransactionDTO(
+                transaction.getId(),
+                transaction.getDateTime(),
+                transaction.getCripto().getSymbol(),
+                transaction.getCriptoQuantity(),
+                transaction.getCriptoQuote(),
+                transaction.getArgentineCurrency(),
+                transaction.getUser().getUsername(),
+                transaction.getUserTransaction().getUsername(),
+                transaction.getType(),
+                transaction.getStateProcess());
+    }
+
+    private List<TransactionDTO> mapperToListDTO(List<Transaction> transactions) {
+        List<TransactionDTO> transactionDTOs = new ArrayList<>();
+
+        for (Transaction transaction: transactions) {
+            transactionDTOs.add(this.mapperToDTO(transaction));
+        }
+
+        return transactionDTOs;
     }
     
 }
