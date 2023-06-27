@@ -2,17 +2,21 @@ package ar.edu.unq.grupof.desarrollo_app_criptop2p.service;
 
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.Cripto;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.persistence.CriptoRepository;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.cache.annotation.Cacheable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class CriptoServiceImpl implements CriptoService {
     @Autowired
     private CriptoRepository repository;
+
+    protected final Log logger = LogFactory.getLog(getClass());
 
     @Override
     @Cacheable(value = "allCriptoCache")
@@ -37,19 +41,17 @@ public class CriptoServiceImpl implements CriptoService {
 
     @Override
     public List<Cripto> getBinanceCryptos() {
-        Double argentinePesos = this.getUsdExchangeRate();
         String uri = "https://www.binance.com/api/v3/ticker/price";
         RestTemplate restTemplate = new RestTemplate();
         Cripto[] prices = restTemplate.getForObject(uri, Cripto[].class);
 
-        List<Cripto> cryptos = Arrays.stream(prices).filter(c -> this.getSimbols().contains(c.getSymbol())).collect(Collectors.toList());
+        if (!ArrayUtils.isEmpty(prices) || !Objects.equals(prices, null)) {
 
-        for (Cripto crypto : cryptos) {
-            crypto.setArgentineCurrency(argentinePesos);
-            crypto.generateHistoricalPrice();
+            return Arrays.stream(prices).filter(c -> this.getSimbols().contains(c.getSymbol())).toList();
+        } else {
+            return null;
         }
 
-        return cryptos;
     }
 
     private Double getUsdExchangeRate() {
@@ -86,15 +88,32 @@ public class CriptoServiceImpl implements CriptoService {
         ));
     }
 
-    public void initialiceCryptos() {
-        List<Cripto> criptos = getBinanceCryptos();
+    @Override
+    public List<Cripto> initialiceCryptos() {
+        List<Cripto> criptos = this.getBinanceCryptos();
+        Double argentinePesos = this.getUsdExchangeRate();
 
-        for (Cripto cripto : criptos) {
-            cripto.generateHistoricalPrice();
+        if(Objects.equals(criptos, null) || Objects.equals(argentinePesos, null)) {
+            logger.error("error connecting to binance API, data will be simulated");
+
+            DataDemo data = new DataDemo();
+
+            criptos = data.getCriptos();
+            argentinePesos = data.getArgentineCurrency();
         }
 
-        repository.saveAll(criptos);
+        this.prepareCriptos(criptos, argentinePesos);
+
+        return repository.saveAll(criptos);
     }
 
+    private void prepareCriptos(List<Cripto> criptos, Double argentinePesos) {
+
+        for (Cripto crypto : criptos) {
+            crypto.setArgentineCurrency(argentinePesos);
+            crypto.generateHistoricalPrice();
+        }
+
+    }
 
 }

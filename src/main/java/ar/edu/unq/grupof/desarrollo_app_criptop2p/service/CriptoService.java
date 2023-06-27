@@ -10,4 +10,5 @@ public interface CriptoService {
     Cripto saveCripto(Cripto cripto);
     Cripto getCriptoBySymbol(String symbol);
     void updateAllCripto(List<Cripto> criptos);
+    List<Cripto> initialiceCryptos();
 }

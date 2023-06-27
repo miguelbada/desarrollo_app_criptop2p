@@ -206,7 +206,7 @@ public class UserModel implements UserDetails {
     }
 
     public void makeTransfer(Transaction intention) {
-        if(intention.isStateProcess(StateProcess.IN_PROCESS)
+        if(Objects.equals(intention.getStateProcess(),StateProcess.IN_PROCESS)
                 && ((intention.isType(OperationType.BUY)
                     && isUserIntention(intention))
                     || (isUserTransaction(intention)
@@ -220,7 +220,7 @@ public class UserModel implements UserDetails {
             if(!intention.isSafePrice()) {
                 intention.setStateProcess(StateProcess.CANCEL);
                 throw new TransactionNotProcessException("the transaction is canceled due to price difference");
-            } else if(intention.isStateProcess(StateProcess.MAKE_TRANSFER)
+            } else if(Objects.equals(intention.getStateProcess(), StateProcess.MAKE_TRANSFER)
                     && ((intention.isType(OperationType.SALE)
                     && isUserIntention(intention))
                     || (isUserTransaction(intention)
@@ -234,7 +234,7 @@ public class UserModel implements UserDetails {
             }
 
         } catch (Exception error) {
-            System.out.println(error);
+            throw new TransactionNotProcessException("error");
         }
 
     }

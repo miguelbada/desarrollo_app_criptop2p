@@ -1,7 +1,5 @@
 package ar.edu.unq.grupof.desarrollo_app_criptop2p.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

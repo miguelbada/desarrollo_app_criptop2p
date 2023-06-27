@@ -5,7 +5,6 @@ import ar.edu.unq.grupof.desarrollo_app_criptop2p.rest_webservice.dto.Authentica
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.rest_webservice.dto.UserModelDTO;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.service.security.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

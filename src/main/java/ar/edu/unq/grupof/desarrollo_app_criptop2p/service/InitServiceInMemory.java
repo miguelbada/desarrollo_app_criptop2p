@@ -63,8 +63,7 @@ public class InitServiceInMemory {
         userModelService.saveUserModel(nancy);
         userModelService.saveUserModel(martin);
 
-        List<Cripto> criptos = criptoService.getBinanceCryptos();
-        criptos.forEach(cripto -> criptoService.saveCripto(cripto));
+        List<Cripto> criptos = criptoService.initialiceCryptos();
 
         Transaction transactionMartin1 = martin.createTransaction(criptos.get(0),1.0, criptos.get(0).getPrice(), OperationType.BUY);
         Transaction transactionMartin2 = martin.createTransaction(criptos.get(1), 2.0, criptos.get(1).getPrice(), OperationType.BUY);
