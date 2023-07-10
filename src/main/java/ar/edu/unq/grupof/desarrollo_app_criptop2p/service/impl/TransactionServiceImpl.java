@@ -1,4 +1,4 @@
-package ar.edu.unq.grupof.desarrollo_app_criptop2p.service;
+package ar.edu.unq.grupof.desarrollo_app_criptop2p.service.impl;
 
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.rest_webservice.dto.OperationVolumenReport;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.StateProcess;
@@ -7,6 +7,7 @@ import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.exception.TransactionNot
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.persistence.TransactionRepository;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.persistence.UserModelRepository;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.rest_webservice.dto.UserReport;
+import ar.edu.unq.grupof.desarrollo_app_criptop2p.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;

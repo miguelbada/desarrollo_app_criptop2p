@@ -12,10 +12,10 @@ public class ScheduledTaskService {
     @Autowired
     private CriptoService service;
 
-    //@Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 10000)
     @Transactional
     public void initializeCriptosScheduled() {
-        List<Cripto> criptosBiList = service.getBinanceCryptos();
+        List<Cripto> criptosBiList = service.initialiceCryptos();
 
         for (Cripto cripto: criptosBiList) {
             service.saveCripto(updateCripto(cripto, service.getCriptoBySymbol(cripto.getSymbol())));

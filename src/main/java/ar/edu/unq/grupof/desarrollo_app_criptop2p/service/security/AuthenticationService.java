@@ -32,7 +32,7 @@ public class AuthenticationService {
     private TokenService tokenService;
 
     @Autowired
-    private JwtService jwtService;
+    private JwtServiceImpl jwtService;
 
     private final AuthenticationManager authenticationManager;
 

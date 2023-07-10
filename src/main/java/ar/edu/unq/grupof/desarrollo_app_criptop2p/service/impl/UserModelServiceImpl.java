@@ -1,8 +1,9 @@
-package ar.edu.unq.grupof.desarrollo_app_criptop2p.service;
+package ar.edu.unq.grupof.desarrollo_app_criptop2p.service.impl;
 
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.UserModel;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.exception.UserNotFoundException;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.persistence.UserModelRepository;
+import ar.edu.unq.grupof.desarrollo_app_criptop2p.service.UserModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserModelServiceImpl implements UserModelService{
+public class UserModelServiceImpl implements UserModelService {
     @Autowired
     private UserModelRepository repository;
 

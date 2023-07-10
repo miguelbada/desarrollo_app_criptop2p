@@ -1,9 +1,10 @@
-package ar.edu.unq.grupof.desarrollo_app_criptop2p.service;
+package ar.edu.unq.grupof.desarrollo_app_criptop2p.service.impl;
 
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.Role;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.RoleType;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.model.exception.RoleNotFoundException;
 import ar.edu.unq.grupof.desarrollo_app_criptop2p.persistence.RoleRepository;
+import ar.edu.unq.grupof.desarrollo_app_criptop2p.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class RoleServiceImpl implements RoleService{
+public class RoleServiceImpl implements RoleService {
     @Autowired
     RoleRepository repository;
 

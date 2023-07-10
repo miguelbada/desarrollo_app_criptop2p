@@ -87,7 +87,6 @@ public class InitServiceInMemory {
         martin.makeTransfer(transactionMartin3);
         miguel.confirmReception(transactionMartin3);
 
-
         transactionService.updateTransaction(transactionMartin1Save.getId(), transactionMartin1);
         transactionService.updateTransaction(transactionMartin2Save.getId(), transactionMartin2);
         transactionService.updateTransaction(transactionMartin3Save.getId(), transactionMartin3);
