@@ -10,8 +10,6 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -38,9 +36,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
         in = SecuritySchemeIn.HEADER
 )
 @Configuration
-/*@EnableWebSecurity
-@EnableMethodSecurity*/
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableWebSecurity
+@EnableMethodSecurity
 public class WebSecurityConfig {
 
     @Autowired
@@ -79,21 +76,6 @@ public class WebSecurityConfig {
                 .headers().frameOptions().disable();// Database H2 web
 
         return http.build();
-    }
-
-    @Bean
-    @Order(2)
-    public SecurityFilterChain restApiSecurity(HttpSecurity httpSecurity) throws Exception {
-
-        httpSecurity
-                .authorizeHttpRequests()
-                .requestMatchers("/api/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .oauth2ResourceServer()
-                .jwt();
-
-        return httpSecurity.build();
     }
 
 }
